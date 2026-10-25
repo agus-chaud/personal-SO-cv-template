@@ -49,6 +49,10 @@ describe('about, projects, ls y social', () => {
     expect(hrefs).toEqual(LINKS.map((l) => l.url));
   });
 
+  test('about no se define como «inconformista»', () => {
+    expect(flat(run('about', ctx()).lines)).not.toMatch(/inconformista/i);
+  });
+
   test('projects lista un proyecto por cada uno de la colección con su descripción', () => {
     const t = text('projects');
     for (const p of ctx().projects) {

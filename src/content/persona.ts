@@ -16,7 +16,7 @@ export const PERSONA = {
   /** Tu línea: título de la página y vista previa al compartir. */
   tagline: 'Data Scientist · Data Engineer · AI Engineer',
   /** Lo que responde `whoami` en la Terminal. */
-  whoami: 'Un inconformista: entiendo qué está pasando y por qué, qué puede pasar y qué podemos cambiar para que pase algo distinto.',
+  whoami: 'Entiendo qué está pasando y por qué, qué puede pasar y qué podemos cambiar para que pase algo distinto.',
   /** La dirección pública de la web (sin barra final). También va en wrangler.jsonc → SITE_URL. */
   siteUrl: 'https://agus-os.aguschaud.workers.dev',
   /** Tu usuario de GitHub: la ventana GitHub, el Stack y los repositorios etiquetados con `showcase`. */

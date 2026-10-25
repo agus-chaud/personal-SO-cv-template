@@ -14,8 +14,12 @@ describe('texto de Sobre mí', () => {
   const { data, body } = splitFrontmatter(markdown);
 
   test('tiene la línea de presentación y el gancho', () => {
-    expect(data.tagline).toBe('Inconformista. Data Scientist, Data Engineer y AI Engineer.');
+    expect(data.tagline).toBe('Data Scientist, Data Engineer y AI Engineer.');
     expect(data.hook).toMatch(/^Docente de IA aplicada y tutor de tesis en ITBA\./);
+  });
+
+  test('no se define como «inconformista» en ningún lado', () => {
+    expect(markdown).not.toMatch(/inconformista/i);
   });
 
   test('tiene todas las secciones acordadas, en orden', () => {

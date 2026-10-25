@@ -1,11 +1,11 @@
 ---
-tagline: Inconformista. Data Scientist, Data Engineer y AI Engineer.
+tagline: Data Scientist, Data Engineer y AI Engineer.
 hook: Docente de IA aplicada y tutor de tesis en ITBA. Juego al básquet desde los 6 años.
 ---
 
 ## Sobre mí
 
-Me gusta definirme como un inconformista. Disfruto entender qué está pasando y por qué, qué puede llegar a pasar en el futuro y qué podemos cambiar para que pase algo distinto. Para eso me pongo el sombrero que haga falta: data scientist, data engineer o AI engineer.
+Disfruto entender qué está pasando y por qué, qué puede llegar a pasar en el futuro y qué podemos cambiar para que pase algo distinto. Para eso me pongo el sombrero que haga falta: data scientist, data engineer o AI engineer.
 
 Hoy creo productos de datos con evals y guardrails y desarrollo modelos de ML. Doy clases de IA aplicada y soy tutor de tesis en ITBA.
 
