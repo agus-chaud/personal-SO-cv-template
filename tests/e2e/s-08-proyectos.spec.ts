@@ -67,6 +67,9 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
 
   test('un proyecto con repositorio público muestra sus lenguajes, etiquetas, licencia y el botón del repositorio', async ({ page }, testInfo) => {
     await openDetail(page, testInfo.project.name, withRepo.id);
+    // El apartado de tecnologías se llama «Stack» (antes «Hecho con»).
+    await expect(page.getByRole('heading', { name: 'Stack', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Hecho con' })).toHaveCount(0);
     const langs = page.getByTestId('project-languages');
     await expect(langs).toBeVisible();
     for (const l of withRepo.github!.languages.slice(0, 2)) await expect(langs).toContainText(l.name);

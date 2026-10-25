@@ -5,13 +5,11 @@ description: "Cómo funciona este portfolio por dentro: las tecnologías, la act
 
 ## Qué es
 
-Es un portfolio con forma de sistema operativo de escritorio, dentro del navegador. Todo lo que ves (las ventanas, el dock, la barra de menú, la Terminal) es una web: no hay nada instalado ni un sistema detrás. En el móvil, las ventanas pasan a pantalla completa y el contenido es el mismo.
+Es un cv con forma de sistema operativo de escritorio, dentro del navegador. Todo lo que ves (las ventanas, el dock, la barra de menú, la Terminal) es una web: no hay nada instalado ni un sistema detrás. Si lo abrís desde el celu, el contenido es el mismo.
 
-Lo hice así porque un portfolio de tarjetas no se recuerda, y porque es una forma de enseñar cómo pienso un producto en lugar de solo contarlo. No tiene cuentas ni base de datos: el contenido vive en el repositorio y los cambios son commits.
+Lo hice así porque quería mostrar cómo pienso un producto en vez de solo describirlo.
 
-Sale de una plantilla abierta, [pol-os-template](https://github.com/polmarza/pol-os-template), de Pol Marzà. Este documento cuenta cómo está montado, cómo funciona cada parte y dónde están sus límites.
-
-## Tecnologías
+## Stack
 
 Las piezas que lo sostienen:
 

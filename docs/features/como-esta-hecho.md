@@ -16,7 +16,7 @@ la ficha del proyecto en Proyectos: un **documento largo con índice**, como el 
 El documento tiene estas secciones (el texto lo escribo yo a partir de lo que hemos construido y Pol lo revisa antes de publicarlo):
 
 1. **Qué es Pol OS** y por qué un sistema operativo.
-2. **Tecnologías**, cada una **con su logo** y una línea de para qué se usa: Astro, Svelte, TypeScript, Cloudflare (Workers, Turnstile y el servicio de
+2. **Stack** (antes «Tecnologías»), cada tecnología **con su logo** y una línea de para qué se usa: Astro, Svelte, TypeScript, Cloudflare (Workers, Turnstile y el servicio de
    correo), Vite, Vitest, Playwright, pnpm, GitHub y GitHub Actions, y Claude Code.
 3. **Cómo funciona por dentro:** un sitio estático con un único trozo de servidor, el escritorio como una «isla» de Svelte, el gestor de ventanas, las
    apps que se cargan al abrirlas, el contenido en colecciones del repositorio y la política de seguridad de contenido.

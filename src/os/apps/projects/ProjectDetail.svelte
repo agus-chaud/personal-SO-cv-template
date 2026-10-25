@@ -117,7 +117,7 @@
 
     {#if show.madeWith}
       <section aria-labelledby="pd-made" data-testid="project-made-with">
-        <h3 id="pd-made">Hecho con</h3>
+        <h3 id="pd-made">Stack</h3>
         {#if project.stack.length > 0}
           <ul class="chips" aria-label="Tecnologías">
             {#each project.stack as tech (tech)}<li class="chip">{tech}</li>{/each}

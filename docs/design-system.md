@@ -294,7 +294,7 @@ a la derecha), el índice con enlaces normales y se desplaza con normalidad. Se 
 con "‹ Proyectos" para volver: cabecera con icono grande (76px), nombre y dirección; botón principal ("Abrir en el
 Navegador" si el sitio se deja incrustar; si no, "Visitar sitio ↗" o "Ver en GitHub ↗" en una pestaña nueva) y, si
 el repositorio es público y distinto de esa dirección, "Ver repositorio ↗". Después, solo los apartados que tienen
-contenido: **Qué es** (párrafos), **Hecho con** (tecnologías en etiquetas y, con repositorio público, una barra de
+contenido: **Qué es** (párrafos), **Stack** (tecnologías en etiquetas y, con repositorio público, una barra de
 lenguajes con su leyenda en texto, las etiquetas del repositorio y la licencia) y **Capturas** (miniaturas 16:10).
 Una captura se amplía dentro de la ventana, con anterior, siguiente y cerrar; Escape la cierra y no la ventana, y
 las flechas pasan de una a otra. Los GIF se animan y, con movimiento reducido, se ve su imagen fija. Los colores de

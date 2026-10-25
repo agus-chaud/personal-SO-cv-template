@@ -16,7 +16,7 @@ detalle.
   incrustar) o **Visitar sitio ↗** en una pestaña nueva (si no, como Yoleo o GitHub), y **Ver repositorio ↗**
   cuando el repositorio es público.
 - **Qué es:** unos párrafos escritos para el proyecto.
-- **Hecho con:** las tecnologías. Si hay repositorio público, también sus lenguajes (con su porcentaje) y sus
+- **Stack:** las tecnologías. Si hay repositorio público, también sus lenguajes (con su porcentaje) y sus
   etiquetas, y la licencia.
 - **Capturas de pantalla:** una galería; pulsar una la amplía dentro de la ventana.
 

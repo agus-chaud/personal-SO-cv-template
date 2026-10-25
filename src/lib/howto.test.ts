@@ -105,12 +105,21 @@ describe('src/content/como-esta-hecho.md', () => {
     const headings = [...body.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
     expect(headings).toEqual([
       'Qué es',
-      'Tecnologías',
+      'Stack',
       'Cómo funciona por dentro',
       'Cómo se actualizan solos los datos',
       'El formulario de Correo y el Libro de visitas',
       'Cómo se trabaja',
       'Limitaciones: los bloqueos de LaLiga',
+    ]);
+  });
+
+  test('«Qué es» dice solo los dos párrafos acordados', () => {
+    const que = body.split(/^## /m).find((s) => s.startsWith('Qué es'))!;
+    const parrafos = que.split(/\r?\n/).slice(1).map((l) => l.trim()).filter(Boolean);
+    expect(parrafos).toEqual([
+      'Es un cv con forma de sistema operativo de escritorio, dentro del navegador. Todo lo que ves (las ventanas, el dock, la barra de menú, la Terminal) es una web: no hay nada instalado ni un sistema detrás. Si lo abrís desde el celu, el contenido es el mismo.',
+      'Lo hice así porque quería mostrar cómo pienso un producto en vez de solo describirlo.',
     ]);
   });
 

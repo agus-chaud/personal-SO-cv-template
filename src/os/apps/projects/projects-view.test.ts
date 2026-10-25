@@ -140,12 +140,12 @@ describe('detailSections', () => {
     expect(s.madeWith).toBe(true);
   });
 
-  test('sin tecnologías ni datos de GitHub, "Hecho con" tampoco aparece', () => {
+  test('sin tecnologías ni datos de GitHub, "Stack" tampoco aparece', () => {
     const s = detailSections({ details: [], stack: [], screenshots: [] });
     expect(s).toEqual({ what: false, madeWith: false, languages: false, topics: false, license: false, screenshots: false });
   });
 
-  test('con solo la licencia (sin tecnologías ni lenguajes) "Hecho con" aparece por ella', () => {
+  test('con solo la licencia (sin tecnologías ni lenguajes) "Stack" aparece por ella', () => {
     const s = detailSections({ details: [], stack: [], screenshots: [], github: { languages: [], topics: [], license: 'MIT' } });
     expect(s.madeWith).toBe(true);
     expect(s.license).toBe(true);
