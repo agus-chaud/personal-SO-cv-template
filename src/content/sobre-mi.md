@@ -13,7 +13,7 @@ Hoy creo productos de datos con evals y guardrails y desarrollo modelos de ML. D
 
 - **Docente en IA Aplicada a Negocios, ITBA** · marzo 2025 – actualidad. Les enseño a 48 alumnos a usar IA para ser más eficientes: skills, context engineering, MCPs, testing, memoria persistente y cuándo no conviene automatizar. Armé un profesor particular con el contenido teórico para que lo consulten cuando quieran.
 - **Tutor en Proyecto Final, ITBA** · agosto 2026 – actualidad. Guío al grupo en su caso de negocio (Vera AI) y hago la primera corrección de los 5 entregables.
-- **Data Scientist, IQ4B** · enero 2025 – mayo 2026. Diseñé con clientes dashboards y reportes en Power BI y Qlik Sense, con recargas periódicas para mantener los datos al día. Hice un modelo de predicción de demanda para retail, segmenté a los consultores en 4 perfiles para recomendar asignaciones y bajé la reunión semanal de preventa de 2 horas a 1.
+- **Data Scientist, IQ4B** · enero 2025 – mayo 2026. Diseñé con clientes dashboards y reportes en Power BI y Qlik Sense, con recargas periódicas para mantener los datos al día. Hice un modelo de predicción de demanda para un retailer.
 
 ## Proyectos
 
