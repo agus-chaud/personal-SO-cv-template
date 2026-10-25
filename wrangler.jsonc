@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "pol-os-template",
+  "name": "agus-os",
   // No puede ser posterior a la versión de workerd instalada.
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
