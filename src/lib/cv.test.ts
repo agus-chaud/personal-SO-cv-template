@@ -7,22 +7,30 @@ import { cvHash } from './cv-hash';
 const root = process.cwd();
 const markdown = readFileSync(join(root, 'src/content/sobre-mi.md'), 'utf8');
 
+/** El único correo que se publica: el de contacto, a pedido de su dueño. */
+const CONTACT_EMAIL = 'aguschaud@gmail.com';
+
 describe('texto de Sobre mí', () => {
   const { data, body } = splitFrontmatter(markdown);
 
   test('tiene la línea de presentación y el gancho', () => {
-    expect(data.tagline).toBe('Diseño y construyo productos digitales, con IA y con método.');
-    expect(data.hook).toMatch(/^Este CV es de ejemplo\./);
+    expect(data.tagline).toBe('Inconformista. Data Scientist, Data Engineer y AI Engineer.');
+    expect(data.hook).toMatch(/^Docente de IA aplicada y tutor de tesis en ITBA\./);
   });
 
   test('tiene todas las secciones acordadas, en orden', () => {
-    const headings = [...body.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
-    expect(headings).toEqual(['De dónde vengo', 'Cómo trabajo', 'Ahora mismo', 'Proyectos', 'Qué busco', 'Datos']);
+    const headings = [...body.matchAll(/^## (.+?)\r?$/gm)].map((m) => m[1]);
+    expect(headings).toEqual(['Sobre mí', 'Experiencia', 'Proyectos', 'Habilidades', 'Formación', 'Referencias', 'Datos']);
   });
 
-  test('no publica ninguna dirección de correo', () => {
-    expect(markdown).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.-]+/);
-    expect(markdown).not.toMatch(/mailto:|gmail/i);
+  test('el único correo publicado es el de contacto', () => {
+    const emails = [...markdown.matchAll(/[\w.+-]+@[\w-]+\.[\w.-]+/g)].map((m) => m[0]);
+    expect(new Set(emails)).toEqual(new Set([CONTACT_EMAIL]));
+    for (const [, address] of markdown.matchAll(/mailto:([^)\s]+)/g)) expect(address).toBe(CONTACT_EMAIL);
+  });
+
+  test('no publica teléfonos', () => {
+    expect(markdown).not.toMatch(/\+?\d[\d\s-]{7,}\d/);
   });
 
   test('no publica los nombres de terceros ni lo que se acordó dejar fuera', () => {
@@ -35,9 +43,9 @@ describe('texto de Sobre mí', () => {
     expect(markdown).not.toMatch(/CONFIRMAR|\[¿\?\]|TODO/);
   });
 
-  test('los únicos enlaces son https o a una app del escritorio', () => {
+  test('los únicos enlaces son https, a una app del escritorio o al correo de contacto', () => {
     for (const [, href] of body.matchAll(/\]\(([^)]+)\)/g)) {
-      expect(/^https:\/\//.test(href) || appLinkTarget(href) !== null, href).toBe(true);
+      expect(/^https:\/\//.test(href) || appLinkTarget(href) !== null || href === `mailto:${CONTACT_EMAIL}`, href).toBe(true);
     }
   });
 });

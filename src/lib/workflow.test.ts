@@ -3,7 +3,8 @@ import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 
 // La tarea diaria tiene permiso de escritura y un secreto: estas guardas impiden que alguien la abra a algo peligroso.
-const yml = readFileSync(join(process.cwd(), '.github/workflows/actualizar-datos.yml'), 'utf8');
+// En Windows git puede dejar el archivo con CRLF: se normaliza a LF.
+const yml = readFileSync(join(process.cwd(), '.github/workflows/actualizar-datos.yml'), 'utf8').replace(/\r\n/g, '\n');
 const code = yml
   .split('\n')
   .filter((l) => !l.trim().startsWith('#'))

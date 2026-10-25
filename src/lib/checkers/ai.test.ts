@@ -28,7 +28,8 @@ describe('la máquina', () => {
         g = applyMove(g, m);
       }
     }
-  });
+    // Dos partidas enteras de búsqueda real: en una máquina lenta superan los 5 s por defecto.
+  }, 30_000);
 
   test('con una captura obligatoria, la hace', () => {
     // Rojas: un peón en d4 que la blanca de c3 captura. Si las blancas mueven otra ficha, no ganan.

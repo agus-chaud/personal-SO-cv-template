@@ -22,5 +22,19 @@
   },
   "url": "https://github.com/agus-chaud/Lead_Scoring",
   "embeddable": false,
-  "order": 1
+  "order": 1,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 1570609
+      },
+      {
+        "name": "Python",
+        "bytes": 176904
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
 }

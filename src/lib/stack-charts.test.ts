@@ -94,7 +94,7 @@ describe('linePoints', () => {
 });
 
 // ─── Colores de categoría ──────────────────────────────────────────────────────────────────────────────────────
-const css = readFileSync(join(process.cwd(), 'src/styles/tokens.css'), 'utf8');
+const css = readFileSync(join(process.cwd(), 'src/styles/tokens.css'), 'utf8').replace(/\r\n/g, '\n');
 
 const luminance = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));

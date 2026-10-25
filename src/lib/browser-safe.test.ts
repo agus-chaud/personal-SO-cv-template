@@ -12,7 +12,7 @@ const walk = (dir: string): string[] =>
   });
 
 const lib = walk(join(root, 'src/lib')).filter((f) => /\.ts$/.test(f) && !/\.test\.ts$/.test(f));
-const nodeOnly = lib.filter((f) => /from ['"]node:/.test(readFileSync(f, 'utf8'))).map((f) => f.replace(/^.*\/src\/lib\//, '').replace(/\.ts$/, ''));
+const nodeOnly = lib.filter((f) => /from ['"]node:/.test(readFileSync(f, 'utf8'))).map((f) => f.replace(/\\/g, '/').replace(/^.*\/src\/lib\//, '').replace(/\.ts$/, ''));
 const browserCode = walk(join(root, 'src/os')).filter((f) => /\.(ts|svelte)$/.test(f) && !/\.test\.ts$/.test(f));
 
 describe('código del navegador', () => {

@@ -20,5 +20,15 @@
   },
   "url": "https://github.com/agus-chaud/ETL-Databricks",
   "embeddable": false,
-  "order": 5
+  "order": 5,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 14264
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
 }

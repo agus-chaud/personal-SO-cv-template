@@ -28,5 +28,35 @@
   "howto": true,
   "order": 6,
   "example": false,
-  "repo": "agus-chaud/personal-SO-cv-template"
+  "repo": "agus-chaud/personal-SO-cv-template",
+  "github": {
+    "languages": [
+      {
+        "name": "TypeScript",
+        "bytes": 743814
+      },
+      {
+        "name": "Svelte",
+        "bytes": 232021
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 34999
+      },
+      {
+        "name": "Astro",
+        "bytes": 22034
+      },
+      {
+        "name": "CSS",
+        "bytes": 21792
+      },
+      {
+        "name": "HTML",
+        "bytes": 5033
+      }
+    ],
+    "topics": [],
+    "license": "MIT"
+  }
 }

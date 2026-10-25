@@ -97,12 +97,10 @@ describe('proyectos de src/content/projects', () => {
 });
 
 describe('accesos directos de src/content/links.ts', () => {
-  test('WhatsApp abre una conversación con un número con prefijo de país y no cuenta como perfil público', () => {
-    const wa = LINKS.find((l) => l.id === 'whatsapp')!;
-    expect(wa.url).toMatch(/^https:\/\/wa\.me\/\d{9,15}(\?text=[^&\s]+)?$/);
-    expect(new URL(wa.url).searchParams.get('text')).toBe('Hola, te escribo desde tu portfolio.');
-    expect(wa.profile).toBe(false);
-    expect(PROFILE_LINKS.map((l) => l.id)).toEqual(['newsletter', 'github', 'linkedin']);
+  test('los accesos son GitHub y LinkedIn, sin WhatsApp ni newsletter, y los dos cuentan como perfil público', () => {
+    expect(LINKS.map((l) => l.id)).toEqual(['github', 'linkedin']);
+    expect(PROFILE_LINKS.map((l) => l.id)).toEqual(['github', 'linkedin']);
+    expect(LINKS.find((l) => l.id === 'linkedin')!.url).toBe('https://www.linkedin.com/in/agus-chaud-8394521b5/');
   });
 
   test('cada enlace es https y su icono existe en public/links', () => {

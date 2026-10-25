@@ -53,6 +53,8 @@
   --cat-6: #b45309;
   --cat-7: #0369a1;
   --cat-8: #475569;
+
+  --cat-9: #a21caf;
   --cat-fg: #ffffff;
   --on-wall: #ffffff;
 
@@ -102,6 +104,8 @@
     --cat-6: #f6b756;
     --cat-7: #6cb6f0;
     --cat-8: #a8b3c7;
+
+    --cat-9: #f0abfc;
     --cat-fg: #0b0d12;
     --glass: rgba(32, 32, 38, 0.52);
     --glass-strong: rgba(40, 40, 46, 0.8);
@@ -140,6 +144,8 @@
   --cat-6: #f6b756;
   --cat-7: #6cb6f0;
   --cat-8: #a8b3c7;
+
+  --cat-9: #f0abfc;
   --cat-fg: #0b0d12;
   --glass: rgba(32, 32, 38, 0.52);
   --glass-strong: rgba(40, 40, 46, 0.8);

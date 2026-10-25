@@ -120,12 +120,17 @@ const sections = Object.fromEntries(
 ) as Record<string, FavoritesSection>;
 
 describe('src/content/favorites', () => {
-  test('hay una sección por cada una de las cuatro, cada una con su tipo', () => {
-    for (const s of SECTIONS) {
-      expect(sections[s.id], s.id).toBeDefined();
-      expect(sections[s.id].kind, s.id).toBe(s.id);
+  // Cada sección es opcional (la de videojuegos no está): la que existe es una de las cuatro y lleva su tipo.
+  test('cada sección es una de las cuatro y lleva su tipo', () => {
+    expect(Object.keys(sections).length).toBeGreaterThan(0);
+    for (const [name, section] of Object.entries(sections)) {
+      expect(SECTIONS.some((s) => s.id === name), `${name} no es una sección`).toBe(true);
+      expect(section.kind, name).toBe(name);
     }
-    expect(Object.keys(sections)).toHaveLength(SECTIONS.length);
+  });
+
+  test('no hay sección de videojuegos', () => {
+    expect(sections.games).toBeUndefined();
   });
 
   test('cada sección es un top 10: entre uno y diez elementos, con nombres que no se repiten', () => {
@@ -138,7 +143,7 @@ describe('src/content/favorites', () => {
   });
 
   test('cada portada es un .jpg de la carpeta de su sección, con el nombre de su elemento, y existe', () => {
-    for (const s of SECTIONS) {
+    for (const s of SECTIONS.filter((x) => sections[x.id])) {
       for (const item of sections[s.id].items) {
         expect(item.cover, `${s.id}/${item.id}`).toBe(coverPath(s.id, item.id));
         expect(existsSync(join(process.cwd(), 'public', item.cover)), `falta ${item.cover}`).toBe(true);
@@ -146,7 +151,7 @@ describe('src/content/favorites', () => {
     }
   });
 
-  test('los videojuegos enlazan con su ficha en Shelvid y se nombra Shelvid', () => {
+  test.runIf(sections.games)('los videojuegos enlazan con su ficha en Shelvid y se nombra Shelvid', () => {
     const games = sections.games;
     if (games.kind !== 'games') throw new Error('tipo');
     for (const g of games.items) {

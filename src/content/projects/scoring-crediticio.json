@@ -22,5 +22,19 @@
   },
   "url": "https://aa-scoring-crediticio.onrender.com",
   "embeddable": false,
-  "order": 2
+  "order": 2,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 1804894
+      },
+      {
+        "name": "Python",
+        "bytes": 45076
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
 }

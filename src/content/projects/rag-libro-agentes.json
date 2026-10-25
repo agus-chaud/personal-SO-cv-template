@@ -7,10 +7,46 @@
     "Backend en Python con LangChain y FastAPI: índice FAISS con embeddings locales, retrieval de 4 fragmentos y respuesta en streaming (SSE) que primero manda las páginas fuente y después los tokens. El frontend es un chat en Next.js.",
     "Enfoque eval-first: 10 preguntas con criterios PASS/FAIL y tests automatizados. Los LLM van en cadena (Groq, OpenRouter y un modo offline con un LLM simulado). Línea base actual: 7 de 10 con llama-3.1-8b-instant."
   ],
-  "stack": ["Python", "LangChain", "FAISS", "FastAPI", "Next.js", "pytest"],
+  "stack": [
+    "Python",
+    "LangChain",
+    "FAISS",
+    "FastAPI",
+    "Next.js",
+    "pytest"
+  ],
   "repo": "agus-chaud/RAG-libro-agentes",
-  "colors": { "from": "#38bdf8", "to": "#1e40af" },
+  "colors": {
+    "from": "#38bdf8",
+    "to": "#1e40af"
+  },
   "url": "https://github.com/agus-chaud/RAG-libro-agentes",
   "embeddable": false,
-  "order": 4
+  "order": 4,
+  "github": {
+    "languages": [
+      {
+        "name": "Python",
+        "bytes": 81819
+      },
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 26247
+      },
+      {
+        "name": "TypeScript",
+        "bytes": 20960
+      },
+      {
+        "name": "CSS",
+        "bytes": 413
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 249
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
 }
