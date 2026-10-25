@@ -49,4 +49,5 @@ Los tenés con más detalle en la app [**Proyectos**](#abrir-proyectos) de este 
 ## Datos
 
 - Español nativo. Inglés: Cambridge First Certificate (2021).
-- Escribime desde la app [**Correo**](#abrir-correo) de este escritorio, o por [LinkedIn](https://www.linkedin.com/in/agus-chaud-8394521b5/).
+- Mail: [aguschaud@gmail.com](mailto:aguschaud@gmail.com)
+- También podés escribirme por [LinkedIn](https://www.linkedin.com/in/agus-chaud-8394521b5/).
