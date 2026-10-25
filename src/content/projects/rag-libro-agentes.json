@@ -11,9 +11,13 @@
     "Python",
     "LangChain",
     "FAISS",
+    "Hugging Face",
+    "Groq",
     "FastAPI",
     "Next.js",
-    "pytest"
+    "Tailwind CSS",
+    "pytest",
+    "Claude Code"
   ],
   "repo": "agus-chaud/RAG-libro-agentes",
   "colors": {

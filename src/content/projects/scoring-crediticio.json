@@ -12,8 +12,9 @@
     "scikit-learn",
     "FastAPI",
     "Streamlit",
-    "Docker",
-    "Anthropic API"
+    "Plotly",
+    "Render",
+    "Claude Code"
   ],
   "repo": "agus-chaud/scoring-crediticio",
   "colors": {

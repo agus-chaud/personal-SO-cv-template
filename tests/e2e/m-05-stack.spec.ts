@@ -7,7 +7,7 @@ import { animationsDone, enter } from './helpers';
 
 interface Data {
   generatedAt: string;
-  repos: { total: number; public: number; private: number };
+  repos: { total: number; public: number; private: number; since?: string };
   tools: { id: string; name: string; category: string; repos: number; since: number }[];
 }
 const data = JSON.parse(readFileSync(join(process.cwd(), 'src/content/stack.json'), 'utf8')) as Data;
@@ -34,13 +34,14 @@ test.describe('M-05 Stack', () => {
 
   const categories = [...new Set(data.tools.map((t) => t.category))];
   const years = [...new Set(data.tools.map((t) => t.since))].sort();
-  const sinceMin = Math.min(...data.tools.map((t) => t.since));
+  // El mes del repositorio más antiguo (aunque no tenga herramientas), o el primer año con herramientas en datos antiguos.
+  const since = data.repos.since ?? String(Math.min(...data.tools.map((t) => t.since)));
 
-  test('arriba, tres cifras: herramientas, repositorios y el año desde el que construye', async ({ page }, testInfo) => {
+  test('arriba, tres cifras: herramientas, repositorios y desde cuándo construye', async ({ page }, testInfo) => {
     await openStack(page, testInfo.project.name);
     await expect(page.getByTestId('stack-stat-tools')).toHaveText(`${data.tools.length}herramientas`);
     await expect(page.getByTestId('stack-stat-repos')).toHaveText(`${data.repos.total}repositorios`);
-    await expect(page.getByTestId('stack-stat-since')).toHaveText(`${sinceMin}construyendo desde`);
+    await expect(page.getByTestId('stack-stat-since')).toHaveText(`${since}construyendo desde`);
   });
 
   test('las secciones van en este orden: cifras, año a año, por categoría y detalle por herramienta', async ({ page }, testInfo) => {

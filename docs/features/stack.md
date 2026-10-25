@@ -26,10 +26,16 @@ regenera los datos y, si hay cambios, los publica directamente (la fusión en `m
 - **Los datos son un archivo del repositorio** (`src/content/stack.json`), no una consulta en vivo: el sitio no
   depende de GitHub y se ve igual aunque GitHub caiga.
 - **Un script los genera** (`scripts/actualizar-stack.mjs`). Lee de cada repositorio sus lenguajes, sus
-  dependencias (`package.json`, también en `packages/*`, y `Cargo.toml`) y su año de creación, y traduce cada
-  dependencia a una herramienta con un **catálogo** (`src/lib/stack-catalog.ts`): `react-dom` cuenta como React,
-  `@supabase/supabase-js` como Supabase, etc. Lo que no está en el catálogo no aparece; así no salen librerías
-  menores.
+  dependencias (`package.json`, también en `packages/*`, `Cargo.toml`, `build.gradle(.kts)`, y de Python
+  `requirements*.txt`, `pyproject.toml`, `environment.yml`, `Pipfile`, `setup.py` y los imports de **todos** sus `.py` y
+  notebooks de hasta 25 MB), y traduce cada dependencia a una herramienta con un **catálogo**
+  (`src/lib/stack-catalog.ts`): `react-dom` cuenta como React, `@supabase/supabase-js` como Supabase, etc. Lo que no
+  está en el catálogo no aparece; así no salen librerías menores. Los archivos de skills y plantillas (`.agents/`,
+  `skills/`, `templates/`) no cuentan.
+- **Los forks cuentan, enteros, si tienen commits propios** por delante del original (decisión de Agus, 2026-10-25).
+- **Herramientas declaradas** (`src/content/stack-declarado.ts`): Claude Code cuenta en todos los repositorios salvo los
+  que se exceptúan, aunque el código no lo delate. Ese archivo se publica, así que solo puede nombrar repositorios
+  públicos; el script se niega a escribir si nombra uno privado.
 - **Privacidad:** de los repositorios privados solo se publican **recuentos**, nunca sus nombres. Un test lo
   comprueba sobre el archivo generado.
 - **Tarea diaria** (`.github/workflows/actualizar-datos.yml`, a las 06:00 UTC y también a mano). Por decisión de
@@ -42,7 +48,11 @@ regenera los datos y, si hay cambios, los publica directamente (la fusión en `m
   públicos.
 - **"Cada vez que creo o actualizo un repo"** se resuelve con la ejecución diaria: hacerlo al instante exigiría un
   webhook en cada repositorio.
-- **Desde qué año:** el año del primer repositorio en que aparece cada herramienta.
+- **Desde qué año:** el año del primer commit que trajo la evidencia de cada herramienta (su manifiesto o el archivo que
+  la delata), nunca anterior a su lanzamiento. Si el repositorio solo tuvo actividad el año en que se creó, se usa ese
+  año sin preguntar a la API.
+- **"Construyendo desde"** es el año y mes del repositorio más antiguo (`repos.since` en `stack.json`), tenga o no
+  herramientas.
 - Los colores de las barras salen de tokens, y la información nunca depende solo del color: cada fila lleva su
   número.
 
@@ -50,7 +60,7 @@ regenera los datos y, si hay cambios, los publica directamente (la fusión en `m
 
 | Requisito | Se implementa en | Se valida con |
 |-----------|------------------|---------------|
-| M-05 | `src/os/apps/stack/Stack.svelte`, `src/lib/stack.ts`, `src/lib/stack-catalog.ts`, `src/content/stack.json`, `scripts/actualizar-stack.mjs`, `scripts/actualizar-proyectos.mjs`, `.github/workflows/actualizar-datos.yml`, `src/os/items.ts`, `src/os/apps/registry.ts`, `src/os/menus.ts`, `src/os/terminal/commands.ts` | `tests/e2e/m-05-stack.spec.ts`, `src/lib/stack.test.ts`, `src/lib/stack-content.test.ts`, `src/lib/workflow.test.ts`, `src/os/terminal/commands.test.ts`, `tests/csp/m-11-csp.spec.ts` |
+| M-05 | `src/os/apps/stack/Stack.svelte`, `src/lib/stack.ts`, `src/lib/stack-catalog.ts`, `src/content/stack.json`, `src/content/stack-declarado.ts`, `scripts/actualizar-stack.mjs`, `scripts/actualizar-proyectos.mjs`, `.github/workflows/actualizar-datos.yml`, `src/os/items.ts`, `src/os/apps/registry.ts`, `src/os/menus.ts`, `src/os/terminal/commands.ts` | `tests/e2e/m-05-stack.spec.ts`, `src/lib/stack.test.ts`, `src/lib/stack-content.test.ts`, `src/lib/workflow.test.ts`, `src/os/terminal/commands.test.ts`, `tests/csp/m-11-csp.spec.ts` |
 
 Qué comprueba cada test, según el criterio del PRD:
 
@@ -59,7 +69,9 @@ Qué comprueba cada test, según el criterio del PRD:
   - *Negativo:* la ventana no tiene **ningún enlace ni botón** aparte de los de la propia ventana; el icono ya no
     se llama Herramientas.
 - **Unitarios (`stack.test.ts`):** el catálogo traduce dependencias a herramientas (y agrupa varias en una); el
-  recuento por herramienta, el año de primer uso y el resumen; lo que no está en el catálogo se ignora.
+  recuento por herramienta, el año de primer uso (por evidencia) y el resumen; lo que no está en el catálogo se ignora;
+  las herramientas declaradas; los archivos de skills y plantillas no cuentan; los parsers de Python y Gradle; Spark,
+  Unity Catalog y Delta Live Tables sin import; los archivos enormes no inflan un lenguaje; "construyendo desde".
 - **Contenido (`stack-content.test.ts`):** el archivo generado es válido, no contiene ningún nombre de
   repositorio privado y no tiene herramientas fuera del catálogo.
 - **Tarea diaria y script:** `no verificable por interfaz: se ejecuta en GitHub con un token de Pol y lee la API
@@ -90,6 +102,12 @@ Qué comprueba cada test, según el criterio del PRD:
   `tools` siguen funcionando como alias) y los tests.
 - El análisis cuenta 182 repositorios sin forks (36 públicos y 146 privados); el perfil de GitHub de Pol dice 172, porque
   él midió en otro momento y descontó otros.
+- **Auditoría del 2026-10-25 (repositorios de Agus).** El Stack enseñaba 37 herramientas en 21 repositorios. Fallaba por:
+  forks excluidos (se perdían este portfolio y un lakehouse con commits propios); topes de muestreo (8 `.py` y 5 notebooks
+  por repositorio, que dejaban fuera XGBoost); un catálogo sin SciPy, Polars, Groq, Gemini, Kotlin, Cursor y otras; un
+  `pytest.ini` de plantilla dentro de `.agents/skills/` que contaba como pytest; Claude Code detectado solo por `CLAUDE.md`;
+  Spark usado sin `import` en notebooks de Databricks; y `import dlt` de Delta Live Tables contado como dlt de dltHub.
+  Tras el arreglo: 67 herramientas en 23 repositorios.
 - **La home superó el presupuesto de JavaScript** (134 KB sin comprimir frente al límite de 130 de S-06) con todo lo que se fue
   añadiendo. Sobre mí, Proyectos y Stack se cargan ahora al abrirlas: es lo que la ficha de SEO dejó anotado ("las apps cargan
   su código cuando se abren; se revisa cuando cada una tenga contenido real").

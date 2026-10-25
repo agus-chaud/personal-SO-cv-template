@@ -1,6 +1,20 @@
 import { describe, expect, test } from 'vitest';
 import { CATEGORIES, TOOLS } from './stack-catalog';
-import { barPercent, buildTools, byYear, groupByCategory, pythonDeps, sameData, summary, usesTool, type RepoFacts, type StackData } from './stack';
+import {
+  barPercent,
+  buildingSince,
+  buildTools,
+  byYear,
+  gradleDeps,
+  groupByCategory,
+  pythonDeps,
+  sameData,
+  summary,
+  usesTool,
+  withoutLargeFiles,
+  type RepoFacts,
+  type StackData,
+} from './stack';
 
 const repo = (over: Partial<RepoFacts> = {}): RepoFacts => ({ createdYear: 2025, languages: {}, deps: [], files: [], ...over });
 const tool = (id: string) => TOOLS.find((t) => t.id === id)!;
@@ -54,6 +68,83 @@ describe('usesTool: cuándo un repositorio usa una herramienta', () => {
   test('las librerías de Python cuentan como Python', () => {
     expect(usesTool(repo({ deps: ['py:pandas'] }), tool('python'))).toBe(true);
   });
+
+  test('declarada por el autor: cuenta aunque el código no lo delate, y solo esa herramienta', () => {
+    const declared = repo({ declared: ['claude-code'] });
+    expect(usesTool(declared, tool('claude-code'))).toBe(true);
+    expect(usesTool(declared, tool('cursor'))).toBe(false);
+    expect(usesTool(repo(), tool('claude-code'))).toBe(false);
+  });
+
+  test('Claude Code también por la carpeta .claude', () => {
+    expect(usesTool(repo({ files: ['.claude', '.claude/settings.json'] }), tool('claude-code'))).toBe(true);
+  });
+
+  test('los archivos dentro de skills o plantillas no delatan herramientas', () => {
+    expect(usesTool(repo({ files: ['.agents/skills/testing/templates/pytest.ini'] }), tool('pytest'))).toBe(false);
+    expect(usesTool(repo({ files: ['data-kit/skills/ds/conftest.py'] }), tool('pytest'))).toBe(false);
+    expect(usesTool(repo({ files: ['api/tests/conftest.py'] }), tool('pytest'))).toBe(true);
+  });
+
+  test('por extensión: un modelo .alp es AnyLogic', () => {
+    expect(usesTool(repo({ files: ['modelo/Centro.alp'] }), tool('anylogic'))).toBe(true);
+    expect(usesTool(repo({ files: ['alp.md'] }), tool('anylogic'))).toBe(false);
+  });
+
+  test.each([
+    ['scipy', { deps: ['py:scipy'] }],
+    ['imbalanced-learn', { deps: ['py:imblearn'] }],
+    ['polars', { deps: ['py:polars'] }],
+    ['pyarrow', { deps: ['py:pyarrow'] }],
+    ['sqlalchemy', { deps: ['py:sqlalchemy'] }],
+    ['postgres', { deps: ['py:psycopg2-binary'] }],
+    ['s3', { deps: ['py:boto3'] }],
+    ['geopandas', { deps: ['py:geopandas'] }],
+    ['folium', { deps: ['py:folium'] }],
+    ['groq', { deps: ['py:groq'] }],
+    ['gemini', { deps: ['py:google-genai'] }],
+    ['delta-lake', { deps: ['py:delta'] }],
+    ['unity-catalog', { deps: ['sql:unity-catalog'] }],
+    ['databricks', { deps: ['sql:databricks'] }],
+    ['databricks', { deps: ['databricks:delta-live-tables'] }],
+    ['delta-live-tables', { deps: ['databricks:delta-live-tables'] }],
+    ['kotlin', { languages: { Kotlin: 100 } }],
+    ['android', { files: ['wear/src/main/AndroidManifest.xml'] }],
+    ['jetpack-compose', { deps: ['gradle:androidx.compose.bom'] }],
+    ['wear-os', { deps: ['gradle:androidx.wear.compose.material'] }],
+    ['chartjs', { deps: ['chart.js'] }],
+    ['render', { files: ['render.yaml'] }],
+    ['ruff', { deps: ['py:ruff'] }],
+    ['cursor', { files: ['.cursor/plans/plan.md'] }],
+    ['supabase', { deps: ['py:supabase'] }],
+    ['playwright', { deps: ['py:playwright'] }],
+  ] as [string, Partial<RepoFacts>][])('el catálogo reconoce %s', (id, facts) => {
+    expect(usesTool(repo(facts), tool(id))).toBe(true);
+  });
+});
+
+describe('gradleDeps: dependencias de Gradle', () => {
+  test('los alias del catálogo de versiones y las coordenadas, normalizados', () => {
+    const kts = 'dependencies {\n  implementation(platform(libs.androidx.compose.bom))\n  implementation(libs.androidx.wear.compose.material)\n  implementation("com.google.android.gms:play-services-wearable:18.0.0")\n}\nplugins { alias(libs.plugins.ksp) }';
+    expect(gradleDeps('wear/build.gradle.kts', kts)).toEqual([
+      'gradle:androidx.compose.bom',
+      'gradle:androidx.wear.compose.material',
+      'gradle:com.google.android.gms.play.services.wearable',
+    ]);
+    expect(gradleDeps('README.md', 'libs.androidx.compose.bom')).toEqual([]);
+  });
+});
+
+describe('withoutLargeFiles: los archivos enormes no cuentan como lenguaje', () => {
+  test('una presentación HTML de 12 MB no convierte el repositorio en HTML', () => {
+    const languages = { HTML: 12_000_000, Python: 70_000 };
+    const blobs = [{ path: 'presentacion.html', size: 11_900_000 }, { path: 'src/a.py', size: 70_000 }];
+    expect(withoutLargeFiles(languages, blobs)).toEqual({ HTML: 100_000, Python: 70_000 });
+  });
+
+  test('sin archivos grandes, los bytes no cambian', () => {
+    expect(withoutLargeFiles({ HTML: 500 }, [{ path: 'index.html', size: 500 }])).toEqual({ HTML: 500 });
+  });
 });
 
 describe('pythonDeps: dependencias de Python', () => {
@@ -69,7 +160,53 @@ describe('pythonDeps: dependencias de Python', () => {
 
   test('archivos .py: los módulos que se importan', () => {
     const code = 'import pandas as pd\nfrom sklearn.model_selection import train_test_split\nimport os, json\n  from torch import nn\nx = "import falso"';
-    expect(pythonDeps('src/train.py', code)).toEqual(['py:pandas', 'py:sklearn', 'py:os', 'py:torch']);
+    expect(pythonDeps('src/train.py', code)).toEqual(['py:pandas', 'py:sklearn', 'py:os', 'py:json', 'py:torch']);
+  });
+
+  test('import a, b cuenta todos los módulos, también con alias', () => {
+    expect(pythonDeps('a.py', 'import numpy as np, scipy.stats as st')).toEqual(['py:numpy', 'py:scipy']);
+  });
+
+  test('el SDK de Gemini se importa desde google, y se traduce a su paquete', () => {
+    expect(pythonDeps('llm.py', 'from google import genai\n')).toEqual(['py:google-genai']);
+    expect(pythonDeps('llm.py', 'import google.genai as g\n')).toEqual(['py:google-genai']);
+    expect(pythonDeps('llm.py', 'from google.cloud import storage\n')).toEqual(['py:google']);
+  });
+
+  test('notebooks: %pip install y !pip install cuentan como dependencias', () => {
+    const nb = JSON.stringify({ cells: [{ cell_type: 'code', source: ['%pip install xgboost lightgbm==4.0\n', '!pip install -q imbalanced-learn\n'] }] });
+    expect(pythonDeps('m.ipynb', nb)).toEqual(['py:xgboost', 'py:lightgbm', 'py:imbalanced-learn']);
+  });
+
+  test('notebooks de Databricks: spark sin import es PySpark, y el SQL de Unity Catalog cuenta', () => {
+    const etl = JSON.stringify({ cells: [{ cell_type: 'code', source: 'df = spark.sql("SELECT 1")' }] });
+    expect(pythonDeps('etl.ipynb', etl)).toEqual(['py:pyspark']);
+    const gov = JSON.stringify({ cells: [{ cell_type: 'code', source: '-- permisos\nCREATE CATALOG IF NOT EXISTS dev;\nGRANT USE CATALOG ON CATALOG dev TO `analistas`;' }] });
+    expect(pythonDeps('gov.ipynb', gov)).toEqual(['sql:databricks', 'sql:unity-catalog']);
+    const texto = JSON.stringify({ cells: [{ cell_type: 'markdown', source: 'spark.sql y CREATE CATALOG' }] });
+    expect(pythonDeps('doc.ipynb', texto)).toEqual([]);
+    // %sql también es la magia de JupySQL fuera de Databricks.
+    const jupysql = JSON.stringify({ cells: [{ cell_type: 'code', source: '%sql SELECT * FROM ventas' }] });
+    expect(pythonDeps('sql.ipynb', jupysql)).toEqual([]);
+  });
+
+  test('import dlt con @dlt.table es Delta Live Tables de Databricks, no dlt de dltHub', () => {
+    const dlt = 'import dlt\nfrom pyspark.sql.functions import col\n\n@dlt.table(comment="raw")\ndef bronze():\n    return dlt.read_stream("x")';
+    expect(pythonDeps('pipeline.py', dlt)).toEqual(['py:pyspark', 'databricks:delta-live-tables']);
+    expect(pythonDeps('carga.py', 'import dlt\npipeline = dlt.pipeline(destination="duckdb")')).toEqual(['py:dlt']);
+  });
+
+  test('pyproject.toml con [tool.ruff] cuenta ruff', () => {
+    expect(pythonDeps('pyproject.toml', '[tool.ruff]\nline-length = 100\n')).toEqual(['py:ruff']);
+  });
+
+  test('environment.yml, Pipfile y setup.py', () => {
+    const env = 'name: ds\ndependencies:\n  - python=3.11\n  - pandas>=2\n  - pip:\n    - polars==1.0\n';
+    expect(pythonDeps('environment.yml', env)).toEqual(['py:pandas', 'py:polars']);
+    const pipfile = '[packages]\nrequests = "*"\nscikit-learn = ">=1.4"\n\n[dev-packages]\npytest = "*"\n\n[requires]\npython_version = "3.12"\n';
+    expect(pythonDeps('Pipfile', pipfile)).toEqual(['py:requests', 'py:scikit-learn', 'py:pytest']);
+    const setup = 'setup(name="x", install_requires=["fastapi>=0.1", "pydantic"])';
+    expect(pythonDeps('setup.py', setup)).toEqual(['py:fastapi', 'py:pydantic']);
   });
 
   test('notebooks: los imports de las celdas de código, no los del texto', () => {
@@ -115,6 +252,19 @@ describe('buildTools', () => {
     const old = buildTools([repo({ createdYear: 2023, files: ['CLAUDE.md'], deps: ['react'] })]);
     expect(old.find((t) => t.id === 'claude-code')!.since).toBe(2025);
     expect(old.find((t) => t.id === 'react')!.since).toBe(2023);
+  });
+
+  test('el año sale del primer commit que trae la evidencia, no de la creación del repositorio', () => {
+    const r = repo({ createdYear: 2024, deps: ['react'], files: ['CLAUDE.md'], evidenceYears: { react: 2026 } });
+    const t = buildTools([r]);
+    expect(t.find((x) => x.id === 'react')!.since).toBe(2026);
+    // Sin año de evidencia, el de creación.
+    expect(t.find((x) => x.id === 'claude-code')!.since).toBe(2025);
+  });
+
+  test('con varias evidencias en un repositorio vale la más antigua', () => {
+    const r = repo({ createdYear: 2023, deps: ['react', 'react-dom'], evidenceYears: { react: 2026, 'react-dom': 2024 } });
+    expect(buildTools([r]).find((x) => x.id === 'react')!.since).toBe(2024);
   });
 
   test('lo que no aparece en ningún repositorio no sale, y lo que no está en el catálogo tampoco', () => {
@@ -166,6 +316,11 @@ describe('presentación', () => {
     expect(years.map((y) => y.year)).toEqual([2023, 2026]);
     expect(years[0].tools).toContain('React');
     expect(years[1].tools).toEqual(expect.arrayContaining(['Astro', 'Claude Code']));
+  });
+
+  test('buildingSince: el mes del repositorio más antiguo, o el primer año con herramientas si no se sabe', () => {
+    expect(buildingSince({ repos: { total: 2, public: 2, private: 0, since: '2024-09' }, tools })).toBe('2024-09');
+    expect(buildingSince({ repos: { total: 2, public: 2, private: 0 }, tools })).toBe('2023');
   });
 
   test('summary da el número de herramientas y de repositorios', () => {

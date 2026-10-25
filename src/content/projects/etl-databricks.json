@@ -11,7 +11,8 @@
     "Databricks",
     "PySpark",
     "Delta Lake",
-    "SQL"
+    "SQL",
+    "Claude Code"
   ],
   "repo": "agus-chaud/ETL-Databricks",
   "colors": {

@@ -12,7 +12,8 @@ describe('src/content/stack.json', () => {
   test('tiene la forma esperada y nada más', () => {
     expect(Object.keys(data).sort()).toEqual(['generatedAt', 'repos', 'tools']);
     expect(data.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(Object.keys(data.repos).sort()).toEqual(['private', 'public', 'total']);
+    expect(Object.keys(data.repos).sort()).toEqual(['private', 'public', 'since', 'total']);
+    expect(data.repos.since).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
     for (const t of data.tools) expect(Object.keys(t).sort(), t.id).toEqual(['category', 'id', 'name', 'repos', 'since']);
   });
 

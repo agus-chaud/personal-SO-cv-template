@@ -1,30 +1,31 @@
 {
   "generatedAt": "2026-10-25",
   "repos": {
-    "total": 21,
-    "public": 18,
-    "private": 3
+    "total": 23,
+    "public": 20,
+    "private": 3,
+    "since": "2024-09"
   },
   "tools": [
     {
       "id": "python",
       "name": "Python",
       "category": "lenguajes",
-      "repos": 17,
-      "since": 2026
-    },
-    {
-      "id": "html-css",
-      "name": "HTML y CSS",
-      "category": "lenguajes",
-      "repos": 2,
+      "repos": 18,
       "since": 2026
     },
     {
       "id": "typescript",
       "name": "TypeScript",
       "category": "lenguajes",
-      "repos": 2,
+      "repos": 3,
+      "since": 2026
+    },
+    {
+      "id": "html-css",
+      "name": "HTML y CSS",
+      "category": "lenguajes",
+      "repos": 1,
       "since": 2026
     },
     {
@@ -35,15 +36,22 @@
       "since": 2026
     },
     {
-      "id": "numpy",
-      "name": "NumPy",
-      "category": "ml",
-      "repos": 14,
+      "id": "kotlin",
+      "name": "Kotlin",
+      "category": "lenguajes",
+      "repos": 1,
       "since": 2026
     },
     {
       "id": "jupyter",
       "name": "Jupyter",
+      "category": "ml",
+      "repos": 14,
+      "since": 2026
+    },
+    {
+      "id": "numpy",
+      "name": "NumPy",
       "category": "ml",
       "repos": 13,
       "since": 2026
@@ -70,10 +78,45 @@
       "since": 2026
     },
     {
+      "id": "scipy",
+      "name": "SciPy",
+      "category": "ml",
+      "repos": 7,
+      "since": 2026
+    },
+    {
       "id": "scikit-learn",
       "name": "scikit-learn",
       "category": "ml",
-      "repos": 7,
+      "repos": 6,
+      "since": 2026
+    },
+    {
+      "id": "xgboost",
+      "name": "XGBoost",
+      "category": "ml",
+      "repos": 3,
+      "since": 2026
+    },
+    {
+      "id": "folium",
+      "name": "Folium",
+      "category": "ml",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "geopandas",
+      "name": "GeoPandas",
+      "category": "ml",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "imbalanced-learn",
+      "name": "imbalanced-learn",
+      "category": "ml",
+      "repos": 2,
       "since": 2026
     },
     {
@@ -91,10 +134,10 @@
       "since": 2026
     },
     {
-      "id": "xgboost",
-      "name": "XGBoost",
+      "id": "anylogic",
+      "name": "AnyLogic",
       "category": "ml",
-      "repos": 2,
+      "repos": 1,
       "since": 2026
     },
     {
@@ -126,9 +169,51 @@
       "since": 2026
     },
     {
+      "id": "astro",
+      "name": "Astro",
+      "category": "interfaz",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "chartjs",
+      "name": "Chart.js",
+      "category": "interfaz",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "svelte",
+      "name": "Svelte",
+      "category": "interfaz",
+      "repos": 1,
+      "since": 2026
+    },
+    {
       "id": "tailwind",
       "name": "Tailwind CSS",
       "category": "interfaz",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "android",
+      "name": "Android",
+      "category": "escritorio",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "jetpack-compose",
+      "name": "Jetpack Compose",
+      "category": "escritorio",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "wear-os",
+      "name": "Wear OS",
+      "category": "escritorio",
       "repos": 1,
       "since": 2026
     },
@@ -143,6 +228,41 @@
       "id": "databricks",
       "name": "Databricks",
       "category": "datos",
+      "repos": 3,
+      "since": 2026
+    },
+    {
+      "id": "pyarrow",
+      "name": "PyArrow",
+      "category": "datos",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "pyspark",
+      "name": "PySpark",
+      "category": "datos",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "sqlalchemy",
+      "name": "SQLAlchemy",
+      "category": "datos",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "airflow",
+      "name": "Airflow",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare Workers",
+      "category": "datos",
       "repos": 1,
       "since": 2026
     },
@@ -154,8 +274,15 @@
       "since": 2026
     },
     {
-      "id": "dlt",
-      "name": "dlt",
+      "id": "delta-lake",
+      "name": "Delta Lake",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "delta-live-tables",
+      "name": "Delta Live Tables",
       "category": "datos",
       "repos": 1,
       "since": 2026
@@ -168,10 +295,52 @@
       "since": 2026
     },
     {
-      "id": "pyspark",
-      "name": "PySpark",
+      "id": "polars",
+      "name": "Polars",
       "category": "datos",
       "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "s3",
+      "name": "S3 (boto3)",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "unity-catalog",
+      "name": "Unity Catalog",
+      "category": "datos",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "category": "ia",
+      "repos": 21,
+      "since": 2026
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "category": "ia",
+      "repos": 6,
       "since": 2026
     },
     {
@@ -182,15 +351,15 @@
       "since": 2026
     },
     {
-      "id": "claude-code",
-      "name": "Claude Code",
+      "id": "faiss",
+      "name": "FAISS",
       "category": "ia",
       "repos": 1,
       "since": 2026
     },
     {
-      "id": "faiss",
-      "name": "FAISS",
+      "id": "groq",
+      "name": "Groq",
       "category": "ia",
       "repos": 1,
       "since": 2026
@@ -231,15 +400,36 @@
       "since": 2026
     },
     {
+      "id": "gemini",
+      "name": "SDK de Gemini",
+      "category": "ia",
+      "repos": 1,
+      "since": 2026
+    },
+    {
       "id": "github-actions",
       "name": "GitHub Actions",
       "category": "publicacion",
-      "repos": 2,
+      "repos": 3,
       "since": 2026
     },
     {
       "id": "docker",
       "name": "Docker",
+      "category": "publicacion",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "pnpm",
+      "name": "pnpm",
+      "category": "publicacion",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "render",
+      "name": "Render",
       "category": "publicacion",
       "repos": 1,
       "since": 2026
@@ -252,15 +442,36 @@
       "since": 2026
     },
     {
+      "id": "playwright",
+      "name": "Playwright",
+      "category": "calidad",
+      "repos": 3,
+      "since": 2026
+    },
+    {
       "id": "pytest",
       "name": "pytest",
       "category": "calidad",
-      "repos": 4,
+      "repos": 3,
       "since": 2026
     },
     {
       "id": "eslint",
       "name": "ESLint",
+      "category": "calidad",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "ruff",
+      "name": "ruff",
+      "category": "calidad",
+      "repos": 1,
+      "since": 2026
+    },
+    {
+      "id": "vitest",
+      "name": "Vitest",
       "category": "calidad",
       "repos": 1,
       "since": 2026

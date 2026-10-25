@@ -12,7 +12,8 @@
     "PyMC-Marketing",
     "DuckDB",
     "dbt",
-    "SQL"
+    "SQL",
+    "Claude Code"
   ],
   "repo": "agus-chaud/marketing-mix-modelling",
   "colors": {

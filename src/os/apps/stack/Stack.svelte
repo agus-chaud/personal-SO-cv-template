@@ -1,7 +1,7 @@
 <script lang="ts">
   import data from '../../../content/stack.json';
   import { CATEGORIES } from '../../../lib/stack-catalog';
-  import { barPercent, groupByCategory, summary, type StackData } from '../../../lib/stack';
+  import { barPercent, buildingSince, groupByCategory, summary, type StackData } from '../../../lib/stack';
   import { cumulativeByYear, donutArcs, linePoints } from '../../../lib/stack-charts';
 
   // Los datos salen de src/content/stack.json, que actualiza cada día una tarea de GitHub Actions (M-05).
@@ -11,7 +11,7 @@
   const totals = summary(stack);
   const updated = new Date(`${stack.generatedAt}T12:00:00`).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
   const repos = (n: number) => `${n} ${n === 1 ? 'repositorio' : 'repositorios'}`;
-  const sinceYear = Math.min(...stack.tools.map((t) => t.since));
+  const since = buildingSince(stack);
 
   // Cada categoría tiene su color (--cat-1 a --cat-9), en el orden del catálogo.
   const categoryIndex = new Map<string, number>(CATEGORIES.map((c, i) => [c.id, i + 1]));
@@ -48,7 +48,7 @@
   <section class="stats" aria-label="Resumen" data-testid="stack-stats">
     <p class="stat" data-testid="stack-stat-tools"><strong>{totals.tools}</strong><span>herramientas</span></p>
     <p class="stat" data-testid="stack-stat-repos"><strong>{totals.repos}</strong><span>{totals.repos === 1 ? 'repositorio' : 'repositorios'}</span></p>
-    <p class="stat" data-testid="stack-stat-since"><strong>{sinceYear}</strong><span>construyendo desde</span></p>
+    <p class="stat" data-testid="stack-stat-since"><strong>{since}</strong><span>construyendo desde</span></p>
   </section>
 
   <!-- Año a año -->
@@ -124,7 +124,8 @@
 
   <p class="note" data-testid="stack-note">
     Los números cuentan repositorios, y muchos nacieron de un generador, que trae de serie React, Tailwind, Vite, shadcn/ui, Radix, TanStack, Zod y
-    ESLint. «Desde» es el año de mi primer repositorio con esa herramienta, nunca anterior a su lanzamiento.
+    ESLint. «Desde» es el año del primer commit que la trajo a uno de mis repositorios, nunca anterior a su lanzamiento. Claude Code cuenta también
+    donde lo usé sin dejar rastro en el código.
   </p>
 </div>
 

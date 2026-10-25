@@ -11,7 +11,10 @@
     "Astro",
     "Svelte",
     "TypeScript",
-    "Cloudflare"
+    "Cloudflare",
+    "Vitest",
+    "Playwright",
+    "Claude Code"
   ],
   "screenshots": [
     {

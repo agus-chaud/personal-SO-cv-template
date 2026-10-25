@@ -11,9 +11,15 @@
     "Python",
     "pandas",
     "scikit-learn",
+    "XGBoost",
+    "FastAPI",
     "MCP",
     "LangGraph",
-    "pytest"
+    "Anthropic API",
+    "OpenAI",
+    "Gemini",
+    "pytest",
+    "Claude Code"
   ],
   "repo": "agus-chaud/Lead_Scoring",
   "colors": {

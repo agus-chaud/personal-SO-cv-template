@@ -423,6 +423,17 @@ cambia sin regenerar el PDF. Si el PDF existe se decide en `astro.config.mjs` (N
 rompe la hidratación de toda la web. Una guarda (`browser-safe.test.ts`) lo impide. Cambiar el texto exige ejecutar
 `node scripts/generar-cv.mjs` y commitear el PDF y la huella.
 
+### 2026-10-25 — Stack: forks con commits propios, sin muestreo y año por evidencia
+**Contexto:** una auditoría de los repositorios de Agus mostró que el Stack omitía forks, muestreaba 8 `.py` y 5 notebooks
+por repositorio, no conocía herramientas de datos e IA que sí se usan y fechaba por la creación del repositorio.
+**Decisión:** `scripts/actualizar-stack.mjs` incluye un fork, entero, si tiene commits por delante del original; lee todos los
+`.py` y notebooks (hasta 25 MB), además de `environment.yml`, `Pipfile`, `setup.py` y `build.gradle(.kts)`; fecha cada
+herramienta por el primer commit que trajo su evidencia; y suma las herramientas declaradas en
+`src/content/stack-declarado.ts` (Claude Code). `stack.json` gana `repos.since` (año y mes del repositorio más antiguo),
+que la ventana enseña como "construyendo desde".
+**Consecuencias:** más peticiones a la API por ejecución (una por archivo de Python), dentro del límite de 5000 por hora del
+token. `stack-declarado.ts` se publica: el script se niega a escribir si nombra un repositorio privado.
+
 ### 2026-10-10 — Stack: datos automáticos desde GitHub, publicados cada día
 **Contexto:** "Herramientas" parecía un cajón de utilidades que se podían usar; Pol quería enseñar con qué construye y que
 se mantuviera solo, sin editarlo a mano cada vez que empieza un repositorio nuevo.
