@@ -152,7 +152,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     for (const id of ['about', 'stack', 'notes']) await page.getByTestId(`desktop-icon-${id}`).dblclick();
     // Favoritos (S-03): las cuatro secciones y el mini reproductor de YouTube (simulado, bajo la política real)
     await page.getByTestId('desktop-icon-favorites').dblclick();
-    for (const id of ['games', 'movies', 'books', 'music']) {
+    for (const id of ['sports', 'movies', 'books', 'music']) {
       await page.getByTestId(`favorites-card-${id}`).click();
       await expect(page.getByTestId('favorites-title')).toBeVisible();
       if (id === 'music') await page.locator('[data-testid^="favorites-play-"]').first().click();

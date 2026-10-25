@@ -249,13 +249,14 @@ con texto casi negro; todos con al menos 4,5:1 de contraste (un test lo comprueb
 se encogen y las filas del detalle pasan a dos líneas.
 
 ### Favoritos (`Favorites`, `CoverGrid`, `MusicList`) y mini reproductor (`MiniPlayer`)
-Una carpeta con la forma de Proyectos: la ventana de 640 × 560 abre en **cuatro tarjetas** (`--surface`, radio 12) — Videojuegos, Películas y series,
+Una carpeta con la forma de Proyectos: la ventana de 640 × 560 abre en **cuatro tarjetas** (`--surface`, radio 12) — Deportes, Películas y series,
 Libros y Música — cada una con tres miniportadas, su nombre y «Top 10». Al pulsar una, la misma ventana pasa a la sección, con una barra «‹ Favoritos»
 para volver. No hay textos de gusto ni notas: solo el contenido.
 
-- **Videojuegos, películas y libros** son una cuadrícula de portadas (`minmax(120px, 1fr)`, esquinas de 8px y un filete fino): 3 / 4 los juegos, 2 / 3
+- **Deportes, películas y libros** son una cuadrícula de portadas (`minmax(120px, 1fr)`, esquinas de 8px y un filete fino): 3 / 4 los deportes, 2 / 3
   los libros y las películas, que además llevan una ficha más ancha (póster a la izquierda; título, año, sinopsis y el botón «Ver tráiler» a la
-  derecha). Los juegos son enlaces a su ficha en Shelvid (pestaña nueva), con una línea al pie que nombra Shelvid como el proyecto de un amigo.
+  derecha). Los deportes son una foto y su nombre, sin enlace; al pie, una línea en `--muted` acredita cada foto («Fotos de Wikimedia Commons, recortadas:
+  Básquet, de autor (licencia) · …»), con el nombre del deporte enlazando a su ficha (pestaña nueva).
   Los libros llevan, si existe, un enlace final (Yoleo). Un libro con resumen es un botón con «Leer resumen» en `--accent-text` bajo el autor; abre, en la
   misma ventana y con la barra «‹ Libros», la portada (72px), el título (20px) y el autor en `--muted`, y debajo cada sección numerada (15px, seminegrita)
   con sus viñetas (14px, interlineado 1,5; la etiqueta en negrita; marcadores en `--muted`).

@@ -100,7 +100,7 @@ const APPS: { names: string[]; app: AppId; label: string; arg?: string }[] = [
   { names: ['projects', 'proyectos'], app: 'projects', label: 'Proyectos' },
   { names: ['notes', 'notas'], app: 'notes', label: 'Notas' },
   { names: ['favorites', 'favoritos', 'conoceme'], app: 'favorites', label: 'Favoritos' },
-  { names: ['juegos', 'videojuegos', 'games'], app: 'favorites', label: 'Favoritos: videojuegos', arg: 'games' },
+  { names: ['deportes', 'sports'], app: 'favorites', label: 'Favoritos: deportes', arg: 'sports' },
   { names: ['peliculas', 'series', 'cine', 'movies'], app: 'favorites', label: 'Favoritos: películas y series', arg: 'movies' },
   { names: ['libros', 'books'], app: 'favorites', label: 'Favoritos: libros', arg: 'books' },
   { names: ['memory'], app: 'memory', label: 'Memory' },

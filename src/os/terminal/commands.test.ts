@@ -383,10 +383,11 @@ describe('minigames', () => {
     for (const name of ['github', 'repos', 'repositorios']) expect(run(`open ${name}`, ctx()).actions).toEqual([{ type: 'open', target: { app: 'github' } }]);
   });
 
-  test('juegos y games siguen abriendo los videojuegos de Favoritos, sin chocar con minigames', () => {
-    for (const name of ['juegos', 'games']) {
-      expect(run(`open ${name}`, ctx()).actions).toEqual([{ type: 'open', target: { app: 'favorites', arg: 'games' } }]);
+  test('deportes y sports abren los deportes de Favoritos; juegos ya no abre nada', () => {
+    for (const name of ['deportes', 'sports']) {
+      expect(run(`open ${name}`, ctx()).actions).toEqual([{ type: 'open', target: { app: 'favorites', arg: 'sports' } }]);
     }
+    for (const name of ['juegos', 'videojuegos', 'games']) expect(run(`open ${name}`, ctx()).actions, name).toEqual([]);
     expect(run('juegos', ctx()).game).toBeUndefined();
   });
 });

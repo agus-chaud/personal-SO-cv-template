@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SIZES = { juegos: [600, 800], peliculas: [600, 900], libros: [600, 900], musica: [600, 600] };
+const SIZES = { deportes: [600, 800], peliculas: [600, 900], libros: [600, 900], musica: [600, 600] };
 
 const hue = (text) => [...text].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

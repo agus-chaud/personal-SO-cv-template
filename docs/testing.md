@@ -106,7 +106,7 @@ correo se sustituye por un doble que guarda el mensaje en memoria; el test lo le
   con el texto más grande.
 - Favoritos (S-03): las direcciones de YouTube y los identificadores (once caracteres), el nombre y la portada de cada elemento, el orden de reproducción
   (la siguiente, y ninguna tras la última), la carga de la API de YouTube con un `window` de mentira (una sola vez, con reintento si falla o tarda) y guardas sobre
-  el contenido real (un top 10 por sección, portadas que existen, juegos en Shelvid, vídeos que no se repiten, ningún correo ni teléfono); la política de seguridad
+  el contenido real (un top 10 por sección, portadas que existen, fotos de deportes acreditadas con su ficha de Wikimedia Commons, vídeos que no se repiten, ningún correo ni teléfono); la política de seguridad
   (YouTube solo en `script-src` y `frame-src`). En el navegador, con YouTube simulado: las cuatro secciones y sus elementos, las portadas cargan, antes de pulsar
   play no se pide nada a YouTube, el mini reproductor (se abre, sustituye, pasa a la siguiente, avanza al acabar, se cierra y se destruye, mide al menos 200 × 200 y
   cabe en la pantalla), el aviso si el vídeo o YouTube fallan, la Terminal y el teclado. Controles del reproductor (`s-03-reproductor`): anterior, reproducir/pausar y siguiente
@@ -145,8 +145,8 @@ correo se sustituye por un doble que guarda el mensaje en memoria; el test lo le
   como texto, y que una ventana minimizada conserva su historial. Juegos (`s-04-juegos`, con el azar fijado desde el test): `minigames` en `help`,
   que su código no se pide hasta escribir `minigames` o un juego, una partida ganada y una perdida de cada juego, las jugadas inválidas, `salir`,
   Ctrl+C, que las jugadas no entran en el historial y axe durante una partida. En unitarios (`games/games.test.ts`): las marcas de Wordle con
-  letras repetidas, el ahorcado (`hangman`), adivina el número (`guess`), las listas de palabras y que los comandos no cuentan como jugada. `open juegos` y `open games` siguen
-  abriendo los videojuegos de Favoritos (no chocan con `minigames`).
+  letras repetidas, el ahorcado (`hangman`), adivina el número (`guess`), las listas de palabras y que los comandos no cuentan como jugada. `open deportes` y `open sports` abren
+  los deportes de Favoritos; `open juegos` ya no abre nada (y no choca con `minigames`).
 - Memory (C-05, `c-05-memory`, con el azar fijado y el reparto calculado desde el test): se abre con `memory`, una pareja enseña su nombre, un
   fallo se tapa solo y no deja levantar una tercera, una partida completa con «Jugar otra», el teclado (flechas, Inicio, Fin, Enter), cartas de
   44 px o más en móvil y axe. En unitarios (`memory.test.ts`): repartir, parejas, movimientos, final y que el catálogo de logos es del Stack.

@@ -4,7 +4,7 @@
  */
 
 export const SECTIONS = [
-  { id: 'games', label: 'Videojuegos', dir: 'juegos', aspect: '3 / 4' },
+  { id: 'sports', label: 'Deportes', dir: 'deportes', aspect: '3 / 4' },
   { id: 'movies', label: 'Películas y series', dir: 'peliculas', aspect: '2 / 3' },
   { id: 'books', label: 'Libros', dir: 'libros', aspect: '2 / 3' },
   { id: 'music', label: 'Música', dir: 'musica', aspect: '1 / 1' },
@@ -17,22 +17,28 @@ export const MAX_ITEMS = 10;
 /** El identificador de un vídeo de YouTube: once caracteres de letras, números, guion y guion bajo. */
 export const YOUTUBE_ID = /^[A-Za-z0-9_-]{11}$/;
 
-/** Las fichas de los videojuegos están en Shelvid, el proyecto de un amigo de Pol. */
-export const SHELVID_ORIGIN = 'https://www.shelvid.com';
+/** Las fotos de los deportes son de Wikimedia Commons, con licencia libre: cada una enlaza con su ficha, donde están el autor y la licencia. */
+export const COMMONS_ORIGIN = 'https://commons.wikimedia.org';
 
-export const COVER_PATH = /^\/favoritos\/(juegos|peliculas|libros|musica)\/[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/;
+export const COVER_PATH = /^\/favoritos\/(deportes|peliculas|libros|musica)\/[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/;
 export const ITEM_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** La dirección de una portada: en la carpeta de su sección y con el nombre del elemento. */
 export const coverPath = (section: SectionId, id: string) => `/favoritos/${SECTIONS.find((s) => s.id === section)!.dir}/${id}.jpg`;
 
-export interface GameItem {
+/** De dónde sale una foto con licencia libre: lo que hace falta para atribuirla. */
+export interface PhotoCredit {
+  author: string;
+  /** El nombre corto de la licencia, como «CC BY 2.0» o «CC0». */
+  license: string;
+  /** La ficha de la foto en Wikimedia Commons. */
+  url: string;
+}
+export interface SportItem {
   id: string;
   title: string;
-  year?: number;
   cover: string;
-  /** La ficha del juego en Shelvid. */
-  url: string;
+  photo: PhotoCredit;
 }
 export interface MovieItem {
   id: string;
@@ -80,17 +86,14 @@ interface SectionBase<K extends SectionId, I> {
   title: string;
   items: I[];
 }
-export interface GamesSection extends SectionBase<'games', GameItem> {
-  /** Quién hace las fichas (Shelvid). */
-  credit?: { label: string; url: string };
-}
+export type SportsSection = SectionBase<'sports', SportItem>;
 export interface BooksSection extends SectionBase<'books', BookItem> {
   /** Un enlace final, por ejemplo al perfil de Yoleo. */
   link?: { label: string; url: string };
 }
 export type MoviesSection = SectionBase<'movies', MovieItem>;
 export type MusicSection = SectionBase<'music', SongItem>;
-export type FavoritesSection = GamesSection | MoviesSection | BooksSection | MusicSection;
+export type FavoritesSection = SportsSection | MoviesSection | BooksSection | MusicSection;
 
 export const songUrl = (video: string) => `https://music.youtube.com/watch?v=${video}`;
 export const trailerUrl = (video: string) => `https://www.youtube.com/watch?v=${video}`;

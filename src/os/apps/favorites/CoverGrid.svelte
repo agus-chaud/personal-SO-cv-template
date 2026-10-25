@@ -1,24 +1,23 @@
 <script lang="ts">
   import { UI_SVG } from '../../icons';
-  import { SECTIONS, trailerTrack, type BookItem, type BooksSection, type GamesSection, type MoviesSection } from '../../../lib/favorites';
+  import { SECTIONS, trailerTrack, type BookItem, type BooksSection, type MoviesSection, type SportsSection } from '../../../lib/favorites';
   import { player } from '../../stores/player.svelte';
 
-  // Las secciones de portadas (S-03): videojuegos, películas y series y libros. Cada una es una cuadrícula del top 10.
+  // Las secciones de portadas (S-03): deportes, películas y series y libros. Cada una es una cuadrícula del top 10.
   // Un libro con resumen es un botón que lo abre (`onopenbook`); sin resumen, solo la portada.
-  let { section, onopenbook }: { section: GamesSection | MoviesSection | BooksSection; onopenbook?: (book: BookItem) => void } = $props();
+  let { section, onopenbook }: { section: SportsSection | MoviesSection | BooksSection; onopenbook?: (book: BookItem) => void } = $props();
 
   const aspect = $derived(SECTIONS.find((s) => s.id === section.kind)!.aspect);
 </script>
 
 <ol class="grid" class:wide={section.kind === 'movies'} data-testid={`favorites-grid-${section.kind}`} style:--aspect={aspect}>
-  {#if section.kind === 'games'}
-    {#each section.items as game (game.id)}
-      <li data-testid={`favorites-item-${game.id}`}>
-        <a class="card" href={game.url} target="_blank" rel="noopener noreferrer" aria-label={`${game.title}, en Shelvid (se abre en una pestaña nueva)`}>
-          <img class="cover" src={game.cover} alt="" loading="lazy" />
-          <span class="name">{game.title}</span>
-          {#if game.year}<span class="sub">{game.year}</span>{/if}
-        </a>
+  {#if section.kind === 'sports'}
+    {#each section.items as sport (sport.id)}
+      <li data-testid={`favorites-item-${sport.id}`}>
+        <div class="card">
+          <img class="cover" src={sport.cover} alt="" loading="lazy" />
+          <span class="name">{sport.title}</span>
+        </div>
       </li>
     {/each}
   {:else if section.kind === 'movies'}
@@ -59,9 +58,13 @@
   {/if}
 </ol>
 
-{#if section.kind === 'games' && section.credit}
+{#if section.kind === 'sports'}
+  <!-- Las fotos tienen licencia libre: se atribuyen con su autor, su licencia y su ficha en Wikimedia Commons. -->
   <p class="credit" data-testid="favorites-credit">
-    Las fichas están en <a href={section.credit.url} target="_blank" rel="noopener noreferrer">{section.credit.label}</a>, el proyecto de un amigo.
+    Fotos de Wikimedia Commons, recortadas:
+    {#each section.items as sport, i (sport.id)}
+      <a href={sport.photo.url} target="_blank" rel="noopener noreferrer">{sport.title}</a>, de {sport.photo.author} ({sport.photo.license}){i < section.items.length - 1 ? ' · ' : '.'}
+    {/each}
   </p>
 {/if}
 {#if section.kind === 'books' && section.link}

@@ -7,7 +7,7 @@ import {
   ITEM_ID,
   MAX_ITEMS,
   SECTIONS,
-  SHELVID_ORIGIN,
+  COMMONS_ORIGIN,
   SUMMARY_LIMITS,
   YOUTUBE_ID,
   coverPath,
@@ -38,7 +38,7 @@ describe('identificadores y direcciones', () => {
 
   test('una portada está en la carpeta de su sección y es un .jpg con nombre en minúsculas y guiones', () => {
     expect(coverPath('music', 'droga')).toBe('/favoritos/musica/droga.jpg');
-    expect(coverPath('games', 'the-sims-4')).toBe('/favoritos/juegos/the-sims-4.jpg');
+    expect(coverPath('sports', 'basquet')).toBe('/favoritos/deportes/basquet.jpg');
     for (const ok of ['/favoritos/musica/droga.jpg', '/favoritos/libros/1984.jpg']) expect(COVER_PATH.test(ok), ok).toBe(true);
     for (const bad of ['/favoritos/musica/Droga.jpg', '/favoritos/musica/droga.png', '/favoritos/otra/droga.jpg', '/favoritos/musica/../x.jpg', 'https://x.es/a.jpg', '/favoritos/musica/a b.jpg']) {
       expect(COVER_PATH.test(bad), bad).toBe(false);
@@ -121,7 +121,7 @@ const sections = Object.fromEntries(
 ) as Record<string, FavoritesSection>;
 
 describe('src/content/favorites', () => {
-  // Cada sección es opcional (la de videojuegos no está): la que existe es una de las cuatro y lleva su tipo.
+  // Cada sección es opcional: la que existe es una de las cuatro y lleva su tipo.
   test('cada sección es una de las cuatro y lleva su tipo', () => {
     expect(Object.keys(sections).length).toBeGreaterThan(0);
     for (const [name, section] of Object.entries(sections)) {
@@ -130,8 +130,14 @@ describe('src/content/favorites', () => {
     }
   });
 
-  test('no hay sección de videojuegos', () => {
-    expect(sections.games).toBeUndefined();
+  test('las cuatro secciones son deportes, películas y series, libros y música; ya no hay videojuegos', () => {
+    expect(SECTIONS.map((s) => [s.id, s.label])).toEqual([
+      ['sports', 'Deportes'],
+      ['movies', 'Películas y series'],
+      ['books', 'Libros'],
+      ['music', 'Música'],
+    ]);
+    expect(Object.keys(sections).sort()).toEqual(['books', 'movies', 'music', 'sports']);
   });
 
   test('cada sección es un top 10: entre uno y diez elementos, con nombres que no se repiten', () => {
@@ -152,14 +158,20 @@ describe('src/content/favorites', () => {
     }
   });
 
-  test.runIf(sections.games)('los videojuegos enlazan con su ficha en Shelvid y se nombra Shelvid', () => {
-    const games = sections.games;
-    if (games.kind !== 'games') throw new Error('tipo');
-    for (const g of games.items) {
-      expect(g.url.startsWith(`${SHELVID_ORIGIN}/game/`), g.id).toBe(true);
-      expect(new URL(g.url).search, g.id).toBe('');
+  test('los deportes son básquet, fútbol y pádel, y cada foto nombra su autor, su licencia y su ficha en Wikimedia Commons', () => {
+    const sports = sections.sports;
+    if (sports?.kind !== 'sports') throw new Error('tipo');
+    expect(sports.title).toBe('Deportes');
+    expect(sports.items.map((s) => [s.id, s.title])).toEqual([
+      ['basquet', 'Básquet'],
+      ['futbol', 'Fútbol'],
+      ['padel', 'Pádel'],
+    ]);
+    for (const s of sports.items) {
+      expect(s.photo.author.length, s.id).toBeGreaterThan(1);
+      expect(s.photo.license, s.id).toMatch(/^(CC0|CC BY(-SA)? \d\.\d)$/);
+      expect(s.photo.url.startsWith(`${COMMONS_ORIGIN}/wiki/File:`), s.id).toBe(true);
     }
-    expect(games.credit).toMatchObject({ label: 'Shelvid', url: SHELVID_ORIGIN });
   });
 
   test('las películas llevan año, una sinopsis breve y su tráiler de YouTube', () => {
@@ -237,10 +249,10 @@ describe('src/content/favorites', () => {
     }
   });
 
-  test('los enlaces solo van a Shelvid, a YouTube o al enlace final de los libros', () => {
+  test('los enlaces solo van a Wikimedia Commons o al enlace final de los libros', () => {
     const urls: string[] = [];
     for (const section of Object.values(sections)) {
-      if (section.kind === 'games') urls.push(...section.items.map((i) => i.url));
+      if (section.kind === 'sports') urls.push(...section.items.map((i) => i.photo.url));
       if (section.kind === 'books' && section.link) urls.push(section.link.url);
     }
     for (const url of urls) expect(new URL(url).protocol, url).toBe('https:');

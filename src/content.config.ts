@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { NETWORKS, RELATIONS, normalizeLink, LIMITS as GUESTBOOK_LIMITS } from './lib/guestbook';
-import { COVER_PATH, DURATION, ITEM_ID, MAX_ITEMS, SHELVID_ORIGIN, SUMMARY_LIMITS, YOUTUBE_ID } from './lib/favorites';
+import { COMMONS_ORIGIN, COVER_PATH, DURATION, ITEM_ID, MAX_ITEMS, SUMMARY_LIMITS, YOUTUBE_ID } from './lib/favorites';
 import { isSafeProjectUrl } from './lib/project-url';
 
 const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i);
@@ -114,7 +114,8 @@ const itemId = z.string().regex(ITEM_ID);
 const cover = z.string().regex(COVER_PATH, 'La portada debe estar en /public/favoritos/<sección>/<nombre>.jpg');
 const youtubeId = z.string().regex(YOUTUBE_ID, 'Un identificador de YouTube tiene once caracteres');
 const httpsUrl = z.string().refine((u) => u.startsWith('https://') && URL.canParse(u), 'La dirección debe ser https://');
-const shelvidUrl = httpsUrl.refine((u) => u.startsWith(`${SHELVID_ORIGIN}/`), `La ficha de un juego debe estar en ${SHELVID_ORIGIN}`);
+const commonsUrl = httpsUrl.refine((u) => u.startsWith(`${COMMONS_ORIGIN}/wiki/File:`), `La ficha de una foto debe estar en ${COMMONS_ORIGIN}`);
+const photo = z.object({ author: z.string().min(1), license: z.string().min(1), url: commonsUrl });
 const link = z.object({ label: z.string().min(1), url: httpsUrl });
 
 // El resumen de un libro: secciones con puntos de etiqueta y/o texto, y como mucho un nivel de subpuntos.
@@ -138,10 +139,9 @@ const favorites = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/favorites' }),
   schema: z.discriminatedUnion('kind', [
     z.object({
-      kind: z.literal('games'),
+      kind: z.literal('sports'),
       title: z.string().min(1),
-      credit: link.optional(),
-      items: z.array(z.object({ id: itemId, title: z.string().min(1), year: z.number().int().optional(), cover, url: shelvidUrl })).max(MAX_ITEMS),
+      items: z.array(z.object({ id: itemId, title: z.string().min(1), cover, photo })).max(MAX_ITEMS),
     }),
     z.object({
       kind: z.literal('movies'),

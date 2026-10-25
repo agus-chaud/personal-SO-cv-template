@@ -508,8 +508,8 @@ abierto lo deja devolviendo errores de dependencias (caché de Vite): hay que re
 YouTube; se descartaron: TMDB limita el almacenamiento a seis meses y es solo para uso no comercial, e IGDB y YouTube piden claves. Además, las condiciones de
 YouTube no permiten ocultar el reproductor, separar el audio, reproducir en segundo plano ni guardar copias, y Plyr está en desuso.
 **Decisión:** (1) Todo el contenido lo aporta Pol y vive en el repositorio: una colección `favorites` con un archivo por sección (top 10), validada al compilar, y las
-portadas como `.jpg` en `public/favoritos/` (sin peticiones a terceros al abrir una sección). (2) Los juegos enlazan con su ficha en Shelvid (el proyecto de un
-amigo) y las películas con su tráiler. (3) La música y los tráilers se reproducen con el reproductor oficial de YouTube en un mini reproductor único, con el vídeo
+portadas como `.jpg` en `public/favoritos/` (sin peticiones a terceros al abrir una sección). (2) Los deportes llevan una foto con licencia libre de Wikimedia Commons,
+guardada en el repositorio y acreditada con su autor, su licencia y un enlace a su ficha (decisión del 2026-10-25, que sustituye a los videojuegos con Shelvid), y las películas enlazan con su tráiler. (3) La música y los tráilers se reproducen con el reproductor oficial de YouTube en un mini reproductor único, con el vídeo
 siempre a la vista, controlado con la API oficial (`iframe_api`) y desde `youtube-nocookie.com`. (4) **Nada de YouTube se carga hasta pulsar play**: el script de
 la API y el vídeo se piden entonces; la política de seguridad solo se amplía con `https://www.youtube.com` en `script-src` y `https://www.youtube-nocookie.com` en
 `frame-src` (nunca en `connect-src` ni `img-src`). (5) El mini reproductor se monta solo mientras hay algo que reproducir, y bloquear la pantalla lo cierra.

@@ -9,8 +9,8 @@
 Una carpeta **Favoritos** en el escritorio (y en la pantalla de inicio del móvil), con la misma forma que Proyectos: una vista de **cuatro tarjetas**, y cada una abre su
 ventana con el **top 10** de Pol en esa categoría. No hay notas, justificaciones ni líneas de gusto: los propios elementos dicen cómo es Pol.
 
-- **Juegos:** una cuadrícula de portadas; cada portada enlaza con la ficha del juego en **Shelvid** (shelvid.com, el proyecto de un amigo de
-  Pol, que se menciona).
+- **Deportes** (sustituye a Videojuegos desde el 2026-10-25): una cuadrícula de fotos con licencia libre de **Wikimedia Commons** (básquet, fútbol y pádel), guardadas
+  en el repositorio; al pie, cada foto se acredita con su autor, su licencia y un enlace a su ficha.
 - **Películas y series:** una cuadrícula de pósteres con título, año y una sinopsis breve; cada una con su **tráiler** de YouTube, que se abre en el mini reproductor.
 - **Libros:** una cuadrícula de portadas y, al final, un enlace al perfil de Pol en **Yoleo**. Un libro puede llevar un **resumen** (añadido el 2026-10-25): su portada
   abre, dentro de la misma ventana, una vista con la portada, el título, el autor y el resumen por secciones; «‹ Libros» o Escape vuelven a la cuadrícula.
@@ -52,7 +52,7 @@ Qué comprobará cada test, según el criterio del PRD:
   - *Negativo:* un identificador de YouTube mal formado se rechaza al compilar.
 - **e2e (escritorio y móvil, con axe en claro y oscuro):** la carpeta se abre y tiene las cuatro tarjetas; cada sección enseña sus elementos con portada, título y enlace seguro (pestaña nueva); la
   música es una lista con play; pulsar play abre el mini reproductor con el vídeo a la vista (con YouTube simulado); pulsar otra canción lo sustituye; «siguiente» pasa a la canción siguiente; cerrarlo lo
-  detiene; el enlace a Yoleo y las menciones a Shelvid están.
+  detiene; el enlace a Yoleo y los créditos de las fotos de deportes están.
   - *Negativo:* **antes de pulsar play no se pide nada a YouTube**; y si el vídeo no se puede cargar, el elemento sigue enlazando a YouTube sin dejar un reproductor roto.
 - **Contra la compilación (`pnpm test:csp`):** la política permite exactamente los dos dominios de YouTube (y solo en los destinos que toca), y el recorrido con el reproductor simulado no registra violaciones.
 
@@ -68,8 +68,11 @@ Qué comprobará cada test, según el criterio del PRD:
   para validarlo con Zod y pintarlo sin `{@html}`. Los resúmenes son largos (2.600–3.800 caracteres), por eso no van como la sinopsis de las películas sino en una vista propia
   (`BookSummary.svelte`). Lo comprueban `src/lib/favorites.test.ts` (cinco secciones por libro con resumen, textos sin espacios sobrantes y dentro de `SUMMARY_LIMITS`) y un caso
   nuevo de `tests/e2e/s-03-favoritos.spec.ts` (abrir, volver con «Libros» y con Escape, foco).
-- **La spec e2e de Favoritos no arranca desde que se quitó la sección de videojuegos:** `loadFavorites()` lee `games.json`, que ya no existe. El caso de los resúmenes
-  se comprobó a mano en el navegador (escritorio y móvil, claro y oscuro) y queda pendiente de correr cuando se arregle el helper.
+- **La spec e2e de Favoritos estuvo rota mientras no hubo sección de videojuegos** (`loadFavorites()` leía `games.json`). Con Deportes (2026-10-25) vuelve a correr:
+  45 pasan, 3 se saltan (lo que no aplica en móvil) y el de accesibilidad de escritorio pasa solo, pero puede agotar sus 30 s con toda la spec en paralelo contra
+  el servidor de desarrollo.
+- **Deportes (2026-10-25):** las fotos salen de Wikimedia Commons (licencia, autor y ficha leídos de su API, no escritos a mano) y se recortan a 600 × 800. La de
+  fútbol se cambió por una sin el número de Flickr en el nombre: el test que impide teléfonos en el contenido (`\d{9,}`) saltaba con la dirección de su ficha.
 - Las portadas se nombran con el título sin apóstrofes (`ill-tell-you-someday.jpg`), para que coincidan con los nombres que se le dieron a Pol.
 - **No se ha podido ver reproducir un vídeo real:** el navegador de revisión crea el reproductor con el dominio sin cookies pero no llega a YouTube y deja el hueco en negro.
 

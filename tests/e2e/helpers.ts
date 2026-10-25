@@ -222,15 +222,14 @@ export async function stubGuestbookApi(
 
 /** Los cuatro archivos de Favoritos (S-03), en el orden de las secciones. */
 export interface FavoritesFile {
-  kind: 'games' | 'movies' | 'books' | 'music';
+  kind: 'sports' | 'movies' | 'books' | 'music';
   title: string;
-  credit?: { label: string; url: string };
   link?: { label: string; url: string };
   items: { id: string; title: string; cover: string; [key: string]: unknown }[];
 }
 export function loadFavorites(): FavoritesFile[] {
   const dir = join(process.cwd(), 'src/content/favorites');
-  return ['games', 'movies', 'books', 'music'].map((k) => JSON.parse(readFileSync(join(dir, `${k}.json`), 'utf8')) as FavoritesFile);
+  return ['sports', 'movies', 'books', 'music'].map((k) => JSON.parse(readFileSync(join(dir, `${k}.json`), 'utf8')) as FavoritesFile);
 }
 
 /**

@@ -21,7 +21,7 @@ una persona ficticia, Álex Ejemplo, para que cambies los datos y lo publiques c
 - **Notas**: una carpeta de entradas en Markdown. Cada una tiene además su página pública, con vista previa al compartir, para que Google la encuentre.
 - **Correo**: un formulario con forma de cliente de correo que te llega de verdad (Cloudflare Email Service, con anti-bots y límite de envíos). No guarda nada.
 - **Libro de visitas**: reseñas que pasan por la confirmación del correo de su autor y por tu aprobación, sin base de datos.
-- **Favoritos**: tu top de videojuegos, películas, libros y música, con un mini reproductor de YouTube.
+- **Favoritos**: tu top de deportes, películas, libros y música, con un mini reproductor de YouTube.
 - **Stack** y **GitHub**: tus herramientas y tus repositorios destacados (los que llevan el topic `showcase`), calculados desde GitHub por una tarea programada.
 - **Terminal**: comandos, huevos de Pascua y `minigames` (Wordle, ahorcado, adivina el número, `memory` y `checkers`, damas en 3D contra la máquina).
 - **Ajustes**: tema claro u oscuro, fondo de pantalla y tamaño del texto.
@@ -101,7 +101,7 @@ El método completo, como plantilla para cualquier proyecto, está en [project-t
 - Películas: *Big Buck Bunny*, *Sintel*, *Tears of Steel*, *Spring* y *Charge*, películas abiertas de la
   [Blender Foundation](https://studio.blender.org/films/) (CC BY).
 - Música: temas de [Kevin MacLeod](https://incompetech.com) (CC BY).
-- Los videojuegos y libros de Favoritos solo se nombran; sus portadas son de ejemplo, generadas por `scripts/generar-portadas-ejemplo.mjs`.
+- Las fotos de Deportes en Favoritos son de Wikimedia Commons, con su autor y su licencia en la propia sección.
 
 ## Licencia
 

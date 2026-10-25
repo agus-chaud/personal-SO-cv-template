@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type { SummarySection } from '../../src/lib/favorites';
 import { animationsDone, endCurrent, enter, failCurrent, loadFavorites, stubExternalSites, stubYouTube, youtubeLoads } from './helpers';
 
-const [games, movies, books, music] = loadFavorites();
+const [sports, movies, books, music] = loadFavorites();
 const isMobile = (name: string) => name.endsWith('movil');
 const YOUTUBE_HOSTS = /youtube|ytimg|googlevideo|ggpht|youtu\.be/i;
 
@@ -15,7 +15,7 @@ async function openFavorites(page: Page, projectName: string) {
   await expect(page.getByTestId('favorites-card-music')).toBeVisible();
 }
 
-async function openSection(page: Page, projectName: string, id: 'games' | 'movies' | 'books' | 'music') {
+async function openSection(page: Page, projectName: string, id: 'sports' | 'movies' | 'books' | 'music') {
   await openFavorites(page, projectName);
   await page.getByTestId(`favorites-card-${id}`).click();
   await expect(page.getByTestId('favorites-title')).toBeVisible();
@@ -31,8 +31,8 @@ test.describe('S-03 Favoritos', () => {
 
   test('la carpeta tiene las cuatro secciones y cada una dice que es un top 10', async ({ page }, testInfo) => {
     await openFavorites(page, testInfo.project.name);
-    const counts = { games: games.items.length, movies: movies.items.length, books: books.items.length, music: music.items.length };
-    for (const [id, label] of [['games', 'Videojuegos'], ['movies', 'Películas y series'], ['books', 'Libros'], ['music', 'Música']] as const) {
+    const counts = { sports: sports.items.length, movies: movies.items.length, books: books.items.length, music: music.items.length };
+    for (const [id, label] of [['sports', 'Deportes'], ['movies', 'Películas y series'], ['books', 'Libros'], ['music', 'Música']] as const) {
       const card = page.getByTestId(`favorites-card-${id}`);
       await expect(card).toContainText(label);
       // «Top N»: tantos como haya en la sección (el contenido de ejemplo de la plantilla tiene menos de diez).
@@ -45,23 +45,24 @@ test.describe('S-03 Favoritos', () => {
     await openSection(page, testInfo.project.name, 'books');
     await expect(page.getByTestId('favorites-title')).toHaveText('Libros');
     await page.getByTestId('favorites-back').click();
-    await expect(page.getByTestId('favorites-card-games')).toBeVisible();
+    await expect(page.getByTestId('favorites-card-sports')).toBeVisible();
   });
 
-  test('videojuegos: diez portadas, en su orden, que enlazan con su ficha de Shelvid en una pestaña nueva', async ({ page }, testInfo) => {
-    await openSection(page, testInfo.project.name, 'games');
-    const grid = page.getByTestId('favorites-grid-games');
-    await expect(grid.locator('li')).toHaveCount(games.items.length);
-    await expect(grid.locator('.name')).toHaveText(games.items.map((g) => g.title));
-    for (const g of games.items) {
-      const link = page.getByTestId(`favorites-item-${g.id}`).getByRole('link');
-      await expect(link).toHaveAttribute('href', g.url as string);
+  test('deportes: las fotos en su orden, con su nombre, y el crédito de cada foto enlaza con su ficha de Wikimedia Commons', async ({ page }, testInfo) => {
+    await openSection(page, testInfo.project.name, 'sports');
+    await expect(page.getByTestId('favorites-title')).toHaveText('Deportes');
+    const grid = page.getByTestId('favorites-grid-sports');
+    await expect(grid.locator('li')).toHaveCount(sports.items.length);
+    await expect(grid.locator('.name')).toHaveText(sports.items.map((s) => s.title));
+    const credit = page.getByTestId('favorites-credit');
+    for (const s of sports.items) {
+      const photo = s.photo as { author: string; license: string; url: string };
+      const link = credit.getByRole('link', { name: s.title });
+      await expect(link).toHaveAttribute('href', photo.url);
       await expect(link).toHaveAttribute('target', '_blank');
       await expect(link).toHaveAttribute('rel', /noopener/);
-      expect(g.url as string).toMatch(/^https:\/\/www\.shelvid\.com\/game\//);
+      await expect(credit).toContainText(`${photo.author} (${photo.license})`);
     }
-    await expect(page.getByTestId('favorites-credit')).toContainText('Shelvid');
-    await expect(page.getByTestId('favorites-credit').getByRole('link')).toHaveAttribute('href', 'https://www.shelvid.com');
   });
 
   test('películas y series: diez fichas con póster, año, sinopsis y botón de tráiler', async ({ page }, testInfo) => {
@@ -138,7 +139,7 @@ test.describe('S-03 Favoritos', () => {
 
   test('todas las portadas cargan de verdad', async ({ page }, testInfo) => {
     await openFavorites(page, testInfo.project.name);
-    for (const section of [games, movies, books, music]) {
+    for (const section of [sports, movies, books, music]) {
       await page.getByTestId(`favorites-card-${section.kind}`).click();
       const covers = page.locator('[data-testid^="favorites-item-"] img');
       await expect(covers).toHaveCount(section.items.length);
@@ -337,7 +338,7 @@ test.describe('S-03 Favoritos', () => {
       };
       await openFavorites(page, testInfo.project.name);
       await check('tarjetas');
-      for (const section of [games, movies, books, music]) {
+      for (const section of [sports, movies, books, music]) {
         await page.getByTestId(`favorites-card-${section.kind}`).click();
         await expect(page.getByTestId('favorites-title')).toBeVisible();
         await check(section.kind);

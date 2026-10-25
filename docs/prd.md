@@ -157,8 +157,8 @@ desde LinkedIn en el teléfono.
   *Negativo:* dada una URL de nota que no existe, entonces se muestra una página 404 dentro del
   mismo entorno.
 - **[S-03] Favoritos (para conocer a Pol)** — Dado un visitante, cuando abre la carpeta Favoritos, entonces
-  ve cuatro secciones (Juegos, Películas y series, Libros y Música), cada una con el top 10 de Pol; y cuando
-  pulsa un elemento, entonces llega a su ficha (los juegos, a Shelvid; los libros y las películas, a su enlace;
+  ve cuatro secciones (Deportes, Películas y series, Libros y Música), cada una con el top 10 de Pol; y cuando
+  pulsa un elemento, entonces llega a su ficha (los deportes muestran su foto y acreditan su autor y su licencia en Wikimedia Commons; los libros y las películas, a su enlace;
   las canciones, a YouTube). Las canciones y los tráilers se reproducen en un mini reproductor de YouTube, con
   el vídeo a la vista, que se abre al pulsar play. Los detalles están en `docs/features/favoritos.md`.
   *Negativo:* dado un visitante que no ha pulsado play, entonces no se carga nada de YouTube; y dado un

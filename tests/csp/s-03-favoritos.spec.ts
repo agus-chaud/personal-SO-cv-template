@@ -7,7 +7,7 @@ import { enter, loadFavorites, stubExternalSites, stubYouTube } from '../e2e/hel
  * tiene que estar permitido por `script-src`, o no se ejecuta y el reproductor no llega a crearse.
  */
 
-const [games, movies, books, music] = loadFavorites();
+const [sports, movies, books, music] = loadFavorites();
 
 async function trackViolations(page: Page) {
   await page.addInitScript(() => {
@@ -51,12 +51,12 @@ test.describe('S-03 Favoritos: contra la compilación', () => {
     }
   });
 
-  test('el archivo de Favoritos trae las cuatro secciones en orden, con todas sus portadas y solo enlaces a Shelvid o YouTube', async ({ request }) => {
+  test('el archivo de Favoritos trae las cuatro secciones en orden, con todas sus portadas y solo enlaces a Wikimedia Commons', async ({ request }) => {
     const res = await request.get('/favoritos.json');
     expect(res.status()).toBe(200);
     expect(res.headers()['content-type']).toContain('json');
-    const data = (await res.json()) as typeof games[];
-    expect(data.map((s) => s.kind)).toEqual(['games', 'movies', 'books', 'music']);
+    const data = (await res.json()) as typeof sports[];
+    expect(data.map((s) => s.kind)).toEqual(['sports', 'movies', 'books', 'music']);
     for (const section of data) {
       expect(section.items.length).toBeLessThanOrEqual(10);
       for (const item of section.items) {
@@ -68,7 +68,7 @@ test.describe('S-03 Favoritos: contra la compilación', () => {
     const text = JSON.stringify(data);
     expect(text).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.-]+|mailto:/);
     const hosts = new Set([...text.matchAll(/https?:\/\/([^/"]+)/g)].map((m) => m[1]));
-    expect([...hosts].sort()).toEqual(['www.shelvid.com']);
+    expect([...hosts].sort()).toEqual(['commons.wikimedia.org']);
   });
 
   test('con la política activa, pulsar play carga el reproductor y no registra ninguna violación', async ({ page, context }) => {
