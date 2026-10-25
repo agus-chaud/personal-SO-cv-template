@@ -19,7 +19,7 @@ El código se escribió con Claude Code, un agente de código, siguiendo un mét
 
 ## Cómo funciona por dentro
 
-**Un sitio estático con un único trozo de servidor.** Casi todo son páginas generadas al compilar con Astro y servidas desde Cloudflare Workers. El único código que se ejecuta en un servidor son los endpoints del formulario de Correo y del Libro de visitas.
+**Un sitio estático con un único trozo de servidor.** Casi todo son páginas generadas al compilar con Astro y servidas desde Cloudflare Workers. El único código que se ejecuta en un servidor son los endpoints del Libro de visitas.
 
 **El escritorio es una «isla» de Svelte.** Es lo único que se activa en el navegador. El gestor de ventanas (mover, redimensionar, ampliar, colocar en mitades, minimizar) son funciones puras: reciben el estado y devuelven el siguiente. Por eso se prueban sin abrir un navegador.
 
@@ -47,9 +47,9 @@ Si el token caduca, la tarea falla en lugar de publicar números recortados. Los
 
 Una advertencia de honestidad, que también está en el Stack: los números cuentan repositorios, y muchos nacieron de un generador que trae de serie React, Tailwind, Vite y otras herramientas. Por eso aparecen más de lo que reflejaría una elección consciente. «Desde» es el año del primer repositorio con esa herramienta, nunca anterior a su lanzamiento.
 
-## El formulario de Correo y el Libro de visitas
+## El Correo y el Libro de visitas
 
-**Correo.** Escribes en el formulario y pasa por una verificación anti-bots (Cloudflare Turnstile), un límite de frecuencia y una validación en el servidor. El mensaje llega al correo del autor a través del servicio de correo de Cloudflare. **No se guarda en ningún sitio**: si el envío falla, lo ves y puedes reintentar. El destino sale siempre de la configuración del servidor, nunca de lo que manda el navegador.
+**Correo.** No hay formulario: la ventana de Correo enseña el correo de contacto, LinkedIn y GitHub. El correo se abre en tu propio programa de correo, así que no pasa nada por el servidor.
 
 **Libro de visitas.** El [Libro de visitas](#abrir-visitas) tampoco usa base de datos:
 
@@ -73,7 +73,7 @@ Todo se prueba en local, nunca contra la web publicada. Y el despliegue lo hace 
 
 **Ideas para resolverlo.**
 
-- Sacar las páginas de Cloudflare (por ejemplo a Netlify, con el DNS sin proxy) y llevar el formulario a otro servicio de correo.
+- Sacar las páginas de Cloudflare (por ejemplo a Netlify, con el DNS sin proxy) y llevar el Libro de visitas a otro servicio de correo.
 - Un servidor propio pequeño, con una dirección que no se comparta con nadie.
 - Una página de respaldo en otro dominio, con un aviso, un vídeo que explique qué es esto y una estimación de cuándo vuelve la web. Sirve a quien llega desde un enlace propio, no a quien escribe el dominio directamente.
 - Una copia completa de la web en otro proveedor.

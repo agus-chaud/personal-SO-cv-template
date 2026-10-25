@@ -8,7 +8,7 @@ import { PERSONA } from '../../src/content/persona';
  */
 
 const SITE = 'https://example.com';
-const SECTIONS = ['que-es', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-formulario-de-correo-y-el-libro-de-visitas', 'como-se-trabaja', 'limitaciones-los-bloqueos-de-laliga'];
+const SECTIONS = ['que-es', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-correo-y-el-libro-de-visitas', 'como-se-trabaja', 'limitaciones-los-bloqueos-de-laliga'];
 
 async function trackViolations(page: Page) {
   await page.addInitScript(() => {

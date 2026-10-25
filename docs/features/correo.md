@@ -60,7 +60,7 @@ contrato de `docs/architecture.md`. No guarda el mensaje ni lo escribe en los re
 
 | Requisito | Se implementa en | Se valida con |
 |-----------|------------------|---------------|
-| M-08 | `src/os/apps/mail/Mail.svelte`, `src/lib/contact.ts`, `src/lib/contact-service.ts`, `src/pages/api/contact.ts`, `wrangler.jsonc` | `tests/e2e/m-08-correo.spec.ts`, `tests/e2e/m-08-correo-api.spec.ts`, `src/lib/contact.test.ts`, `src/lib/contact-service.test.ts` |
+| M-08 | `src/os/apps/mail/Mail.svelte`, `src/lib/contact-card.ts` | `tests/e2e/m-08-correo.spec.ts`, `src/lib/contact-card.test.ts` |
 
 Qué comprueba cada test, según el criterio del PRD:
 
@@ -114,3 +114,15 @@ Pol OS y ver que llega con el "responder a" correcto. Queda anotado en el PR.
   Turnstile en Cloudflare: son pasos de Pol (ver `docs/architecture.md`).
 - Guardar los mensajes, adjuntos y respuestas automáticas al visitante.
 - Dar de alta los secretos reales en producción: lo hace Pol con `wrangler secret put`.
+
+## Cambio del 2026-10-25: tarjeta de contacto
+
+El formulario no podía enviar en producción: el remitente de `wrangler.jsonc` seguía siendo el de la plantilla
+(`contacto@m.example.com`), y hacerlo funcionar exigía un dominio propio dado de alta en Cloudflare Email Service.
+Agustín decidió sustituirlo por una tarjeta con su correo (`mailto:`), LinkedIn y GitHub.
+
+- Se borran `src/pages/api/contact.ts`, `src/lib/contact.ts`, `src/lib/contact-service.ts` y sus tests, y `tests/e2e/m-08-correo-api.spec.ts`.
+- Los datos salen de `src/lib/contact-card.ts` (probado en `src/lib/contact-card.test.ts`); la ventana, de `src/os/apps/mail/Mail.svelte`.
+- `tests/e2e/m-08-correo.spec.ts` comprueba la tarjeta, los enlaces, que no hay formulario ni peticiones a `/api/contact`, y axe.
+- Se mantienen Turnstile, el binding de correo y `CONTACT_TO`/`CONTACT_FROM`: los usa el Libro de visitas. El binding `CONTACT_LIMITER`
+  de `wrangler.jsonc` queda sin uso; no se quitó para no tocar la configuración de despliegue.

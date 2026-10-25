@@ -309,13 +309,10 @@ abrir dentro de Pol OS" con un botón para abrirla en una pestaña nueva. Solo c
 lista de favoritos.
 
 ### Correo (`Mail`)
-Barra "Mensaje nuevo" con el botón Enviar. Campos Para (una ficha con el nombre de Pol, un candado y
-la etiqueta "Fijo"; no enseña la dirección), De, Asunto y mensaje, y debajo el widget de Turnstile.
-Cada error sale junto a su campo, con `aria-invalid` y `aria-describedby`, y el primer campo con
-error recibe el foco. Los errores del servidor (demasiados envíos, verificación fallida, fallo del
-correo) salen en un aviso rojo al pie, y los datos escritos se conservan. Si el widget no carga, un
-aviso lo dice y el botón queda desactivado. Al enviar, una pantalla de confirmación con "Escribir
-otro". Lleva un campo trampa fuera de pantalla y de la tabulación.
+Una tarjeta de contacto (desde el 2026-10-25; antes, un formulario): sobre `--win-bg`, una tarjeta `--surface` de radio 12
+y hasta 440px de ancho con el avatar de iniciales (`--accent-solid`, 44px), el nombre (18px) y una lista de tres filas:
+la etiqueta (Mail, LinkedIn, GitHub) en `--muted` y el valor como enlace `--accent-text` en negrita. Los perfiles llevan
+el icono de enlace externo y se abren en una pestaña nueva; el correo es un `mailto:`.
 
 ### Documento (`PaperDoc`)
 Hoja blanca sobre fondo gris con barra superior y botón de descarga. Se usa para Sobre mí. **La hoja es blanca en los

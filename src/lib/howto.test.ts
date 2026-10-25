@@ -108,7 +108,7 @@ describe('src/content/como-esta-hecho.md', () => {
       'Stack',
       'Cómo funciona por dentro',
       'Cómo se actualizan solos los datos',
-      'El formulario de Correo y el Libro de visitas',
+      'El Correo y el Libro de visitas',
       'Cómo se trabaja',
       'Limitaciones: los bloqueos de LaLiga',
     ]);

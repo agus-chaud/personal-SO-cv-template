@@ -5,7 +5,7 @@ import { animationsDone, enter, loadProjects, openProjectDetail, stubExternalSit
 
 const isMobile = (name: string) => name.endsWith('movil');
 const polOs = loadProjects().find((p) => p.id === 'este-portfolio')!;
-const SECTIONS = ['que-es', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-formulario-de-correo-y-el-libro-de-visitas', 'como-se-trabaja', 'limitaciones-los-bloqueos-de-laliga'];
+const SECTIONS = ['que-es', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-correo-y-el-libro-de-visitas', 'como-se-trabaja', 'limitaciones-los-bloqueos-de-laliga'];
 
 /** Abre el documento como lo haría un visitante: doble clic en su icono o, en móvil, un toque en la pantalla de inicio. */
 async function openHowTo(page: Page, projectName: string) {

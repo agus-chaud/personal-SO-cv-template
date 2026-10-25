@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { expect, test, type Page } from '@playwright/test';
-import { enter, loadNotes, loadProjects, stubContactApi, stubExternalSites, stubGuestbookApi, stubTurnstile, stubYouTube } from '../e2e/helpers';
+import { enter, loadNotes, loadProjects, stubExternalSites, stubGuestbookApi, stubTurnstile, stubYouTube } from '../e2e/helpers';
 
 type Violation = { directive: string; blocked: string; sample: string };
 
@@ -49,15 +49,6 @@ test.describe('M-11 Cabeceras de seguridad', () => {
       expect(h['referrer-policy'], path).toBe('strict-origin-when-cross-origin');
       expect(h['permissions-policy'], path).toContain('camera=()');
     }
-  });
-
-  test('el endpoint de contacto lleva sus propias cabeceras, aunque _headers no le aplique', async ({ request }) => {
-    const res = await request.post('/api/contact', { data: {}, headers: { 'cf-connecting-ip': '203.0.113.9' } });
-    const h = res.headers();
-    expect(h['content-security-policy']).toBe("default-src 'none'; frame-ancestors 'none'");
-    expect(h['x-content-type-options']).toBe('nosniff');
-    expect(h['referrer-policy']).toBe('no-referrer');
-    expect(h['cache-control']).toBe('no-store');
   });
 
   test('la política de la home es estricta y todo script o estilo en línea lleva su hash', async ({ request }) => {
@@ -109,7 +100,6 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     await stubTurnstile(context);
     await stubYouTube(context);
     await trackViolations(page);
-    const sent = await stubContactApi(page);
     const reviews = await stubGuestbookApi(page);
     await enter(page);
 
@@ -136,13 +126,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     // Correo: widget (simulado), envío y confirmación
     await page.getByTestId('dock-item-mail').click();
     const mail = page.getByTestId('mail');
-    await expect(mail.getByTestId('mail-captcha')).toContainText('Verificación simulada');
-    await mail.getByTestId('mail-from').fill('ana@ejemplo.com');
-    await mail.getByTestId('mail-subject').fill('Hola');
-    await mail.getByTestId('mail-message').fill('Probando la política.');
-    await mail.getByTestId('mail-send').click();
-    await expect(mail.getByTestId('mail-sent')).toBeVisible();
-    expect(sent).toHaveLength(1);
+    await expect(mail.getByTestId('mail-contact-mail')).toBeVisible();
 
     // Ventanas: mover, redimensionar, ampliar, minimizar, abrir otras apps y el menú de Pol OS
     const win = page.getByTestId('window-mail');

@@ -114,27 +114,6 @@ export async function stubTurnstile(context: BrowserContext) {
   );
 }
 
-export interface SentPayload {
-  from: string;
-  subject: string;
-  message: string;
-  turnstileToken: string;
-  website: string;
-}
-
-/** Simula /api/contact y guarda lo que el formulario manda, para comprobarlo después. */
-export async function stubContactApi(
-  page: Page,
-  reply: { status: number; body: Record<string, unknown> } = { status: 200, body: { ok: true, code: 'sent' } },
-) {
-  const requests: SentPayload[] = [];
-  await page.route('**/api/contact', async (route) => {
-    requests.push(route.request().postDataJSON() as SentPayload);
-    await route.fulfill({ status: reply.status, contentType: 'application/json', body: JSON.stringify(reply.body) });
-  });
-  return requests;
-}
-
 /** El contraste se mide con los colores finales, no a mitad de una animación de entrada. */
 export const animationsDone = (page: Page) =>
   page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)).then(() => undefined));

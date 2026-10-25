@@ -144,9 +144,10 @@ test.describe('S-05 Menús de la barra de menú', () => {
       for (const id of ['undo', 'redo', 'cut', 'copy']) await expect(item(page, 'edicion', id), id).toHaveAttribute('aria-disabled', 'true');
     });
 
-    test('Cortar y Deshacer actúan sobre el campo de Correo sin quitarle el foco', async ({ page }) => {
-      await page.getByTestId('dock-item-mail').click();
-      const field = page.getByTestId('mail-subject');
+    test('Cortar y Deshacer actúan sobre un campo de texto sin quitarle el foco', async ({ page }) => {
+      await page.getByTestId('desktop-icon-guestbook').dblclick();
+      await page.getByTestId('guestbook-write').click();
+      const field = page.getByTestId('guestbook-name');
       await field.click();
       await page.keyboard.type('Hola Pol');
       await page.keyboard.press('ControlOrMeta+a');

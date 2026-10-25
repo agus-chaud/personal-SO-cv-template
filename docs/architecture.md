@@ -118,7 +118,7 @@ Consecuencia de seguridad: no hay nada que robar ni que forzar. La única superf
 
 ## Integraciones externas
 
-- **Cloudflare Turnstile:** el formulario de Correo muestra el widget y envía su token. El endpoint
+- **Cloudflare Turnstile:** el formulario del Libro de visitas muestra el widget y envía su token (el Correo ya no tiene formulario desde el 2026-10-25). El endpoint
   lo valida contra `https://challenges.cloudflare.com/turnstile/v0/siteverify` con la clave secreta
   antes de hacer nada más. En local se usan las claves de prueba publicadas por Cloudflare.
 - **Cloudflare Email Service:** el endpoint envía el mensaje con `env.EMAIL.send()`. Requiere que

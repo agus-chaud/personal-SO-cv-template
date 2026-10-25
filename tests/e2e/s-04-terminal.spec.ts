@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { LINKS } from '../../src/content/links';
-import { animationsDone, enter, loadProjects, openMail, stubExternalSites, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 
 const projects = loadProjects();
@@ -186,17 +186,18 @@ test.describe('S-04 Terminal', () => {
     await expect(log(page)).toContainText('todavia-sigo-aqui');
   });
 
-  test('un mensaje a medio escribir en Correo sigue ahí tras minimizar y recuperar', async ({ page }, testInfo) => {
+  test('un texto a medio escribir en el Libro de visitas sigue ahí tras minimizar y recuperar', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'En móvil no hay ventanas que minimizar');
-    const mail = await openMail(page, testInfo.project.name);
-    await mail.getByTestId('mail-message').fill('Un borrador que no quiero perder.');
-    const win = page.getByTestId('window-mail');
+    await page.getByTestId('desktop-icon-guestbook').dblclick();
+    await page.getByTestId('guestbook-write').click();
+    await page.getByTestId('guestbook-name').fill('Un borrador que no quiero perder');
+    const win = page.getByTestId('window-guestbook');
     await win.getByTestId('window-minimize').click();
     await expect(win).toBeHidden();
 
-    await page.getByTestId('dock-item-mail').click();
+    await page.getByTestId('desktop-icon-guestbook').dblclick();
     await expect(win).toBeVisible();
-    await expect(page.getByTestId('mail-message')).toHaveValue('Un borrador que no quiero perder.');
+    await expect(page.getByTestId('guestbook-name')).toHaveValue('Un borrador que no quiero perder');
   });
 
   test.describe('casos negativos', () => {

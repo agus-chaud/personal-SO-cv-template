@@ -117,12 +117,10 @@ desde LinkedIn en el teléfono.
   con Pol, con un primer mensaje que dice que llega desde el portfolio.
   *Negativo:* el enlace de WhatsApp no figura entre los perfiles públicos de los datos estructurados: ni su
   dirección ni el número salen en ellos.
-- **[M-08] Correo (Contacto)** — Dado un visitante, cuando abre el icono de correo, entonces ve un cliente
-  de correo con el campo "Para" relleno y no editable; y cuando introduce su correo, un asunto y un
-  mensaje válidos y envía, entonces ve una confirmación y el mensaje llega al correo de Pol.
-  *Negativo:* dado un correo con formato inválido o un campo obligatorio vacío, cuando envía,
-  entonces ve el error junto al campo y no se envía nada. Dado un envío que supera el límite
-  de frecuencia o falla la verificación anti-bots, entonces ve un mensaje claro y no se envía nada.
+- **[M-08] Correo (Contacto)** — Dado un visitante, cuando abre el icono de correo, entonces ve una tarjeta
+  de contacto con el nombre, el correo (que abre su programa de correo con `mailto:`), LinkedIn y GitHub
+  (en una pestaña nueva). Desde el 2026-10-25 no hay formulario ni envío por el servidor.
+  *Negativo:* la ventana no tiene campos ni botón de enviar, y no hace ninguna petición a `/api/contact`.
 - **[M-09] Ajustes de sesión** — Dado un visitante con la app Ajustes abierta, cuando cambia entre tema
   claro y oscuro, elige un fondo de pantalla de los disponibles o uno de los tres tamaños de texto (Normal,
   Grande y Muy grande, también desde el menú Visualización), entonces el escritorio cambia al
