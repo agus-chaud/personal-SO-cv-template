@@ -180,15 +180,14 @@ describe('src/content/favorites', () => {
     if (books.link) expect(books.link.url.startsWith('https://')).toBe(true);
   });
 
-  test('los cuatro libros con resumen tienen sus cinco secciones; Hábitos atómicos está, sin resumen', () => {
+  test('los cinco libros tienen su resumen de cinco secciones, Hábitos atómicos incluido', () => {
     const books = sections.books;
     if (books.kind !== 'books') throw new Error('tipo');
     const byId = Object.fromEntries(books.items.map((b) => [b.id, b]));
-    for (const id of ['ai-engineering', 'nos-vemos-en-el-barro', 'el-valor-de-la-atencion', 'esto-es-marketing']) {
+    for (const id of ['ai-engineering', 'nos-vemos-en-el-barro', 'el-valor-de-la-atencion', 'esto-es-marketing', 'habitos-atomicos']) {
       expect(byId[id]?.summary?.length, id).toBe(5);
     }
     expect(byId['habitos-atomicos']).toMatchObject({ title: 'Hábitos atómicos', author: 'James Clear' });
-    expect(byId['habitos-atomicos'].summary).toBeUndefined();
   });
 
   test('cada sección de un resumen tiene título y puntos, cada punto dice algo y no sobran espacios', () => {

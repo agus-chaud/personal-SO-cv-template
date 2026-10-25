@@ -453,7 +453,163 @@
       "id": "habitos-atomicos",
       "title": "Hábitos atómicos",
       "author": "James Clear",
-      "cover": "/favoritos/libros/habitos-atomicos.jpg"
+      "cover": "/favoritos/libros/habitos-atomicos.jpg",
+      "summary": [
+        {
+          "title": "¿Qué te hace cambiar?: Identidad y progreso incremental",
+          "points": [
+            {
+              "label": "Mejora del 1% diario",
+              "text": "El progreso sostenido viene de mejoras continuas chicas."
+            },
+            {
+              "label": "Cambio basado en la identidad",
+              "text": "Los hábitos no solo buscan resultados (escribir un libro), sino moldear quién eres (ser una persona constante). Tu identidad moldea tus hábitos y tus hábitos confirman tu identidad."
+            },
+            {
+              "label": "Automatización",
+              "text": "Los hábitos son soluciones automáticas a problemas recurrentes que liberan carga mental."
+            }
+          ]
+        },
+        {
+          "title": "Las 4 Leyes para crear un buen hábito",
+          "points": [
+            {
+              "label": "1ª Ley",
+              "text": "Hacerlo obvio (Señal)",
+              "points": [
+                {
+                  "label": "Rediseño del ambiente",
+                  "text": "Haz visibles las señales de los hábitos que quieres cultivar."
+                },
+                {
+                  "label": "Conciencia e intencionalidad",
+                  "text": "Define disparadores claros en tu rutina (ej. leer al acostarse, registrar el estado mensual el último día del mes)."
+                }
+              ]
+            },
+            {
+              "label": "2ª Ley",
+              "text": "Hacerlo atractivo (Anhelo)",
+              "points": [
+                {
+                  "label": "Vinculación de tentaciones",
+                  "text": "Conecta una acción que necesitas hacer con una que quieres hacer (ej. desayunar solo tras completar la rutina)."
+                },
+                {
+                  "label": "Entorno social",
+                  "text": "Unite a grupos donde la conducta deseada sea la norma."
+                }
+              ]
+            },
+            {
+              "label": "3ª Ley",
+              "text": "Hacerlo sencillo (Respuesta)",
+              "points": [
+                {
+                  "label": "Regla de los 2 minutos",
+                  "text": "Empieza con una versión minúscula del hábito. No se puede mejorar un hábito que no existe."
+                },
+                {
+                  "label": "Reducir la resistencia",
+                  "text": "Minimiza el número de pasos para ejecutar la acción."
+                }
+              ]
+            },
+            {
+              "label": "4ª Ley",
+              "text": "Hacerlo satisfactorio (Recompensa)",
+              "points": [
+                {
+                  "label": "Gratificación inmediata alineada",
+                  "text": "Premia la conducta de forma coherente con tu identidad (ej. trasladar dinero a un fondo de viaje cada vez que evites un gasto innecesario)."
+                },
+                {
+                  "label": "Seguimiento visual",
+                  "text": "Usa contadores o marcadores (clips, cruces en el calendario) para no romper la cadena."
+                },
+                {
+                  "label": "Regla de oro",
+                  "text": "Nunca faltes dos veces seguidas. Un mal día es un accidente; dos, el inicio de un mal hábito."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Las 4 Leyes invertidas para eliminar un mal hábito",
+          "points": [
+            {
+              "label": "Hacerlo invisible",
+              "text": "Elimina o esconde las señales disparadoras de tu entorno."
+            },
+            {
+              "label": "Hacerlo poco atractivo",
+              "text": "Reencuadra tu mentalidad resaltando los beneficios de evitarlo."
+            },
+            {
+              "label": "Hacerlo difícil",
+              "text": "Aumenta la resistencia y los pasos necesarios para realizarlo (ej. compromisos financieros o pagar por adelantado)."
+            },
+            {
+              "label": "Hacerlo insatisfactorio",
+              "text": "Asocia un costo inmediato y visible mediante rendición de cuentas o penalizaciones emocionales/sociales."
+            }
+          ]
+        },
+        {
+          "title": "Estrategia, talento y motivación sostenida",
+          "points": [
+            {
+              "label": "Jugar a tus fortalezas",
+              "text": "Elige campos alineados con tus habilidades naturales. Si no puedes ganar por ser el mejor, gana siendo diferente (combinando habilidades)."
+            },
+            {
+              "label": "La regla de Ricitos de Oro",
+              "text": "Trabaja en tareas que estén al límite de tu habilidad actual (ni muy fáciles ni muy difíciles) para mantenerte motivado."
+            },
+            {
+              "label": "Manejo del aburrimiento",
+              "text": "La diferencia entre el éxito y el fracaso es la capacidad de mantener la consistencia en tareas repetitivas cuando la novedad desaparece."
+            },
+            {
+              "label": "Estrategia de exploración/explotación",
+              "text": "En proyectos o negocios, dedica el 85% del tiempo a ejecutar lo que funciona y el 15% a explorar nuevas alternativas."
+            }
+          ]
+        },
+        {
+          "title": "Reflexiones sobre la mentalidad y la identidad",
+          "points": [
+            {
+              "label": "Revisión continua",
+              "text": "Revisa y ajusta tus hábitos una vez que sientas que los dominas para evitar estancarte en el piloto automático."
+            },
+            {
+              "label": "Flexibilidad identitaria",
+              "text": "Define tu identidad por tus valores o cualidades subyacentes (\"soy alguien que supera desafíos\") y no por roles rígidos (\"soy atleta\" o \"soy CEO\")."
+            },
+            {
+              "label": "Perspectiva de vida",
+              "points": [
+                {
+                  "text": "La felicidad es la ausencia de deseo de cambiar el estado presente."
+                },
+                {
+                  "text": "La paz llega cuando dejas de convertir lo que observas en un problema."
+                },
+                {
+                  "text": "La curiosidad y la motivación impulsan más acción que la simple inteligencia."
+                },
+                {
+                  "text": "Satisfacción = Realidad − Expectativas."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
