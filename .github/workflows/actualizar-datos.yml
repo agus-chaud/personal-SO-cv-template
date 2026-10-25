@@ -10,10 +10,9 @@
 name: Actualizar datos
 
 on:
-  # En la plantilla, solo a mano (Actions → Actualizar datos → Run workflow). Para que corra cada día, cuando ya hayas puesto
-  # tu usuario en src/content/persona.ts, quita el comentario de estas dos líneas:
-  # schedule:
-  #   - cron: '0 6 * * *'
+  # Cada día a las 6:00 UTC (3:00 en Argentina), y también a mano: Actions → Actualizar datos → Run workflow.
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 # Solo necesita escribir en el repositorio para hacer el commit con los datos nuevos.
