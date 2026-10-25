@@ -229,6 +229,17 @@ describe('src/content/favorites', () => {
     }
   });
 
+  test('las canciones son las elegidas por Agustín, en su orden', () => {
+    const music = sections.music;
+    if (music.kind !== 'music') throw new Error('tipo');
+    expect(music.items.map((s) => [s.title, s.artist])).toEqual([
+      ['La creatividad', 'Las Pastillas del Abuelo'],
+      ['Vine hasta aquí', 'Los Piojos'],
+      ['Whatever It Takes', 'Imagine Dragons'],
+      ['El riesgo', 'El Plan de la Mariposa'],
+    ]);
+  });
+
   test('las canciones llevan artista y su vídeo de YouTube, y no se repite ninguno', () => {
     const music = sections.music;
     if (music.kind !== 'music') throw new Error('tipo');

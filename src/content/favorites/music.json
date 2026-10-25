@@ -3,25 +3,25 @@
   "title": "Música",
   "items": [
     {
-      "id": "que-hago-esperando-un-puto-as",
-      "title": "¿Qué hago esperando un puto as?",
+      "id": "la-creatividad",
+      "title": "La creatividad",
       "artist": "Las Pastillas del Abuelo",
-      "cover": "/favoritos/musica/que-hago-esperando-un-puto-as.jpg",
-      "video": "3NO9OqlgdFA"
+      "cover": "/favoritos/musica/la-creatividad.jpg",
+      "video": "XiHnYkqaf8E"
     },
     {
-      "id": "9-de-julio",
-      "title": "9 de Julio",
-      "artist": "Callejeros",
-      "cover": "/favoritos/musica/9-de-julio.jpg",
-      "video": "HMausbjmD6g"
+      "id": "vine-hasta-aqui",
+      "title": "Vine hasta aquí",
+      "artist": "Los Piojos",
+      "cover": "/favoritos/musica/vine-hasta-aqui.jpg",
+      "video": "427zHJxD060"
     },
     {
-      "id": "pensamientos",
-      "title": "Pensamientos",
-      "artist": "Airbag",
-      "cover": "/favoritos/musica/pensamientos.jpg",
-      "video": "6gDGFfrOMdI"
+      "id": "whatever-it-takes",
+      "title": "Whatever It Takes",
+      "artist": "Imagine Dragons",
+      "cover": "/favoritos/musica/whatever-it-takes.jpg",
+      "video": "gOsM-DYAEhY"
     },
     {
       "id": "el-riesgo",
