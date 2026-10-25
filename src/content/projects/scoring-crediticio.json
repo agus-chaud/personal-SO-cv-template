@@ -1,0 +1,26 @@
+{
+  "name": "Scoring crediticio",
+  "domain": "aa-scoring-crediticio.onrender.com",
+  "description": "Un motor que estima la pérdida esperada de cada préstamo y explica la predicción en lenguaje simple.",
+  "summary": "Pérdida esperada de cada préstamo, explicada por un LLM.",
+  "details": [
+    "Integra un modelo de clasificación (probabilidad de default) con dos de regresión (exposición y severidad) para estimar la pérdida esperada de cada préstamo. Tiene API REST con FastAPI, dashboard en Streamlit y deploy online en Render.",
+    "Un LLM (API de Anthropic) explica a usuarios no técnicos cómo se llega a la predicción, con guardrails que bloquean métricas inventadas, evals de regresión y un fallback que registra la causa del fallo."
+  ],
+  "stack": [
+    "Python",
+    "scikit-learn",
+    "FastAPI",
+    "Streamlit",
+    "Docker",
+    "Anthropic API"
+  ],
+  "repo": "agus-chaud/scoring-crediticio",
+  "colors": {
+    "from": "#4fd1c5",
+    "to": "#1a7f8e"
+  },
+  "url": "https://aa-scoring-crediticio.onrender.com",
+  "embeddable": false,
+  "order": 2
+}

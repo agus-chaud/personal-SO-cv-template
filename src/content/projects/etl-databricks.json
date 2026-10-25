@@ -1,0 +1,24 @@
+{
+  "name": "ETL en Databricks",
+  "domain": "github.com/agus-chaud/ETL-Databricks",
+  "description": "Un pipeline que transforma pedidos crudos en métricas de ventas listas para dashboards.",
+  "summary": "Pipeline Medallion con Delta Lake y KPIs diarios de ventas.",
+  "details": [
+    "Arquitectura Medallion sobre Delta Lake: de pedidos crudos a métricas de negocio. Usa Change Data Feed para procesar solo lo que cambió y bajar tiempos de ejecución y costos de cómputo.",
+    "Entrega KPIs diarios (revenue, ticket promedio, clientes únicos) para las áreas de negocio."
+  ],
+  "stack": [
+    "Databricks",
+    "PySpark",
+    "Delta Lake",
+    "SQL"
+  ],
+  "repo": "agus-chaud/ETL-Databricks",
+  "colors": {
+    "from": "#ff8a3d",
+    "to": "#c2410c"
+  },
+  "url": "https://github.com/agus-chaud/ETL-Databricks",
+  "embeddable": false,
+  "order": 5
+}

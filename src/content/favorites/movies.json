@@ -1,46 +1,30 @@
 {
   "kind": "movies",
-  "title": "Películas y series",
+  "title": "Películas",
   "items": [
     {
-      "id": "big-buck-bunny",
-      "title": "Big Buck Bunny",
-      "year": 2008,
-      "synopsis": "Un conejo gigante y pacífico decide dar una lección a tres roedores que no paran de fastidiar. Película abierta de Blender.",
-      "cover": "/favoritos/peliculas/big-buck-bunny.jpg",
-      "trailer": "aqz-KE-bpKQ"
+      "id": "moneyball",
+      "title": "Moneyball",
+      "year": 2011,
+      "synopsis": "Billy Beane, gerente de los Oakland Athletics, arma un equipo competitivo con poco presupuesto usando estadística para encontrar el valor que el resto del béisbol no ve.",
+      "cover": "/favoritos/peliculas/moneyball.jpg",
+      "trailer": "PwfrGbvxuzM"
     },
     {
-      "id": "sintel",
-      "title": "Sintel",
-      "year": 2010,
-      "synopsis": "Una joven recorre un mundo hostil en busca del pequeño dragón al que cuidó. Película abierta de Blender.",
-      "cover": "/favoritos/peliculas/sintel.jpg",
-      "trailer": "eRsGyueVLvQ"
+      "id": "juego-de-honor",
+      "title": "Juego de honor",
+      "year": 2005,
+      "synopsis": "Ken Carter toma el equipo de básquet de su vieja escuela y exige a los jugadores que firmen un contrato de rendimiento académico. Cuando no cumplen, cierra el gimnasio.",
+      "cover": "/favoritos/peliculas/juego-de-honor.jpg",
+      "trailer": "MV5v0zNDrlE"
     },
     {
-      "id": "tears-of-steel",
-      "title": "Tears of Steel",
-      "year": 2012,
-      "synopsis": "Un grupo de científicos intenta salvar el mundo de unos robots recreando un momento del pasado. Película abierta de Blender.",
-      "cover": "/favoritos/peliculas/tears-of-steel.jpg",
-      "trailer": "R6MlUcmOul8"
-    },
-    {
-      "id": "spring",
-      "title": "Spring",
-      "year": 2019,
-      "synopsis": "Una pastora y su perro se enfrentan a los espíritus antiguos para que vuelva la primavera. Película abierta de Blender.",
-      "cover": "/favoritos/peliculas/spring.jpg",
-      "trailer": "WhWc3b3KhnY"
-    },
-    {
-      "id": "charge",
-      "title": "Charge",
-      "year": 2022,
-      "synopsis": "En un futuro sin energía, una anciana defiende su reserva de un robot cazador. Película abierta de Blender.",
-      "cover": "/favoritos/peliculas/charge.jpg",
-      "trailer": "UXqq0ZvbOnk"
+      "id": "el-secreto-de-sus-ojos",
+      "title": "El secreto de sus ojos",
+      "year": 2009,
+      "synopsis": "Un empleado judicial retirado escribe una novela sobre un crimen de 1974 que nunca pudo cerrar, y al hacerlo vuelve a abrir el caso y un amor que quedó pendiente.",
+      "cover": "/favoritos/peliculas/el-secreto-de-sus-ojos.jpg",
+      "trailer": "hKa8U-8vsfU"
     }
   ]
 }

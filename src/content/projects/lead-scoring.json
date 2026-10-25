@@ -1,0 +1,26 @@
+{
+  "name": "Triage de leads",
+  "domain": "github.com/agus-chaud/Lead_Scoring",
+  "description": "Un modelo que ordena los leads comerciales por probabilidad de conversión y un agente que los contacta.",
+  "summary": "Scoring de leads con un agente LangGraph que los contacta.",
+  "details": [
+    "Modelo de regresión logística para que marketing y ventas prioricen mejor dónde invertir presupuesto y tiempo. Trabajo punta a punta, pensado para que lo entiendan usuarios no técnicos.",
+    "Está expuesto a través de un MCP para que pueda usarse desde sistemas externos, y suma un agente LangGraph que automatiza el contacto a los leads, con guardrails, evals y 79 tests."
+  ],
+  "stack": [
+    "Python",
+    "pandas",
+    "scikit-learn",
+    "MCP",
+    "LangGraph",
+    "pytest"
+  ],
+  "repo": "agus-chaud/Lead_Scoring",
+  "colors": {
+    "from": "#ffb347",
+    "to": "#e0572b"
+  },
+  "url": "https://github.com/agus-chaud/Lead_Scoring",
+  "embeddable": false,
+  "order": 1
+}

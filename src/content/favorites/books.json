@@ -3,28 +3,28 @@
   "title": "Libros",
   "items": [
     {
-      "id": "don-quijote",
-      "title": "Don Quijote de la Mancha",
-      "author": "Miguel de Cervantes",
-      "cover": "/favoritos/libros/don-quijote.jpg"
+      "id": "ai-engineering",
+      "title": "AI Engineering",
+      "author": "Chip Huyen",
+      "cover": "/favoritos/libros/ai-engineering.jpg"
     },
     {
-      "id": "la-regenta",
-      "title": "La Regenta",
-      "author": "Leopoldo Alas «Clarín»",
-      "cover": "/favoritos/libros/la-regenta.jpg"
+      "id": "nos-vemos-en-el-barro",
+      "title": "Nos vemos en el barro",
+      "author": "Alex Dantart",
+      "cover": "/favoritos/libros/nos-vemos-en-el-barro.jpg"
     },
     {
-      "id": "fortunata-y-jacinta",
-      "title": "Fortunata y Jacinta",
-      "author": "Benito Pérez Galdós",
-      "cover": "/favoritos/libros/fortunata-y-jacinta.jpg"
+      "id": "el-valor-de-la-atencion",
+      "title": "El valor de la atención",
+      "author": "Johann Hari",
+      "cover": "/favoritos/libros/el-valor-de-la-atencion.jpg"
     },
     {
-      "id": "platero-y-yo",
-      "title": "Platero y yo",
-      "author": "Juan Ramón Jiménez",
-      "cover": "/favoritos/libros/platero-y-yo.jpg"
+      "id": "esto-es-marketing",
+      "title": "Esto es marketing",
+      "author": "Seth Godin",
+      "cover": "/favoritos/libros/esto-es-marketing.jpg"
     }
   ]
 }

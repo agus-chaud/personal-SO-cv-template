@@ -1,0 +1,16 @@
+{
+  "name": "RAG del libro de agentes",
+  "domain": "github.com/agus-chaud/RAG-libro-agentes",
+  "description": "Un chat que responde preguntas sobre «30 Agents Every AI Engineer Must Build» citando las páginas del libro.",
+  "summary": "RAG eval-first con LangChain, FastAPI y un chat en Next.js.",
+  "details": [
+    "Backend en Python con LangChain y FastAPI: índice FAISS con embeddings locales, retrieval de 4 fragmentos y respuesta en streaming (SSE) que primero manda las páginas fuente y después los tokens. El frontend es un chat en Next.js.",
+    "Enfoque eval-first: 10 preguntas con criterios PASS/FAIL y tests automatizados. Los LLM van en cadena (Groq, OpenRouter y un modo offline con un LLM simulado). Línea base actual: 7 de 10 con llama-3.1-8b-instant."
+  ],
+  "stack": ["Python", "LangChain", "FAISS", "FastAPI", "Next.js", "pytest"],
+  "repo": "agus-chaud/RAG-libro-agentes",
+  "colors": { "from": "#38bdf8", "to": "#1e40af" },
+  "url": "https://github.com/agus-chaud/RAG-libro-agentes",
+  "embeddable": false,
+  "order": 4
+}

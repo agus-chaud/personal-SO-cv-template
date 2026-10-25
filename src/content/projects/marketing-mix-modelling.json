@@ -1,0 +1,16 @@
+{
+  "name": "Marketing Mix Model",
+  "domain": "github.com/agus-chaud/marketing-mix-modelling",
+  "description": "Un MMM bayesiano que reparte las altas semanales de un neobanco entre canales y se contrasta con la verdad conocida.",
+  "summary": "MMM bayesiano con PyMC-Marketing, calibrado y medido contra la verdad.",
+  "details": [
+    "Marketing Mix Model con PyMC-Marketing sobre 104 semanas de un neobanco alemán simulado, con los datos preparados en DuckDB y dbt (31 tests). Como el dataset trae su generador, cada estimación se pre-registró antes de abrir la verdad.",
+    "El modelo base quedó más cerca de la verdad que el calibrado (error medio por canal 45% contra 59%): el experimento go-dark sobrestimó a Google Brand 3,6 veces. Reasignar el mismo presupuesto suma 227 altas por semana; el modelo prometía 646."
+  ],
+  "stack": ["Python", "PyMC-Marketing", "DuckDB", "dbt", "SQL"],
+  "repo": "agus-chaud/marketing-mix-modelling",
+  "colors": { "from": "#c084fc", "to": "#6d28d9" },
+  "url": "https://github.com/agus-chaud/marketing-mix-modelling",
+  "embeddable": false,
+  "order": 3
+}

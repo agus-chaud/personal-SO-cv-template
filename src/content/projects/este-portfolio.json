@@ -1,5 +1,5 @@
 {
-  "name": "Álex OS",
+  "name": "Agus OS",
   "domain": "example.com",
   "description": "Este portfolio: un sistema operativo de escritorio dentro del navegador.",
   "summary": "Este portfolio: un sistema operativo de escritorio dentro del navegador.",
@@ -26,6 +26,7 @@
   "url": "https://example.com",
   "embeddable": false,
   "howto": true,
-  "order": 4,
-  "example": true
+  "order": 6,
+  "example": false,
+  "repo": "agus-chaud/personal-SO-cv-template"
 }
