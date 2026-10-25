@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Actualiza `src/content/stack.json` (la ventana Stack, M-05) analizando los repositorios de Pol en GitHub:
- * lenguajes, dependencias de `package.json` y de Cargo, archivos reveladores y año de creación. Cada dependencia se
+ * lenguajes, dependencias de `package.json`, de Cargo y de Python (requirements, pyproject.toml y los imports de algunos `.py`
+ * y notebooks), archivos reveladores y año de creación. Cada dependencia se
  * traduce a una herramienta con el catálogo de `src/lib/stack-catalog.ts`.
  *
  * Privacidad: de los repositorios privados solo se publican recuentos. Ningún nombre de repositorio llega al archivo, y
@@ -16,7 +17,7 @@
  *   node scripts/actualizar-stack.mjs --dry     # solo enseña el resultado
  */
 import { readFileSync, writeFileSync } from 'node:fs';
-import { buildTools, sameData } from '../src/lib/stack.ts';
+import { buildTools, pythonDeps, sameData } from '../src/lib/stack.ts';
 import { PERSONA } from '../src/content/persona.ts';
 
 const OWNER = PERSONA.github;
@@ -53,12 +54,24 @@ const repos = listado.filter((r) => !r.fork && r.owner.login === OWNER);
 console.log(`Repositorios a analizar: ${repos.length} (${esDePol ? 'públicos y privados' : 'solo públicos'}).`);
 
 const decodificar = (c) => Buffer.from(c.content, 'base64').toString('utf8');
+
+// Texto crudo de un archivo: sirve también para los de más de 1 MB, que la API de contenidos no devuelve en base64.
+async function textoDe(base, ruta) {
+  const res = await fetch(`https://api.github.com/${base}/contents/${encodeURI(ruta)}`, { headers: { ...headers, Accept: 'application/vnd.github.raw' } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`${base.replace(/repos\/[^/]+\/[^/]+/, 'repos/…')}/contents: ${res.status} ${res.statusText}`);
+  return res.text();
+}
+
+// Los notebooks con salidas pueden pesar decenas de MB: se leen solo los de hasta 5 MB.
+const NOTEBOOK_MAX_BYTES = 5 * 1024 * 1024;
 const rutasDe = (arbol, patron, max) => arbol.filter((p) => patron.test(p) && !p.includes('node_modules/')).slice(0, max);
 
 async function analizar(repo) {
   const base = `repos/${repo.full_name}`;
   const [lenguajes, arbol] = await Promise.all([get(`${base}/languages`), get(`${base}/git/trees/HEAD?recursive=1`, { allow: [409, 404] })]);
-  const files = (arbol?.tree ?? []).filter((n) => n.type === 'blob' || n.type === 'tree').map((n) => n.path);
+  const nodos = (arbol?.tree ?? []).filter((n) => n.type === 'blob' || n.type === 'tree');
+  const files = nodos.map((n) => n.path);
   const deps = [];
   for (const ruta of rutasDe(files, /(^|\/)package\.json$/, 6)) {
     const archivo = await get(`${base}/contents/${ruta}`, { allow: [404] });
@@ -74,6 +87,18 @@ async function analizar(repo) {
     const archivo = await get(`${base}/contents/${ruta}`, { allow: [404] });
     if (!archivo?.content) continue;
     for (const [, nombre] of decodificar(archivo).matchAll(/^\s*([A-Za-z0-9_-]+)\s*=/gm)) deps.push(`cargo:${nombre}`);
+  }
+  // Entornos virtuales y copias de Jupyter no son código del repositorio.
+  const fuera = (p) => /(^|\/)(\.venv|venv|site-packages|\.ipynb_checkpoints)\//.test(p);
+  const python = [
+    ...rutasDe(files, /(^|\/)requirements[^/]*\.txt$/i, 3),
+    ...rutasDe(files, /(^|\/)pyproject\.toml$/, 2),
+    ...rutasDe(files.filter((p) => !fuera(p)), /\.py$/, 8),
+    ...rutasDe(nodos.filter((n) => !fuera(n.path) && (n.size ?? 0) <= NOTEBOOK_MAX_BYTES).map((n) => n.path), /\.ipynb$/, 5),
+  ];
+  for (const ruta of python) {
+    const contenido = await textoDe(base, ruta);
+    if (contenido) deps.push(...pythonDeps(ruta, contenido));
   }
   return { createdYear: new Date(repo.created_at).getFullYear(), languages: lenguajes ?? {}, deps, files };
 }

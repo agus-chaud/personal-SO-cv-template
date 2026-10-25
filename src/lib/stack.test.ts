@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { CATEGORIES, TOOLS } from './stack-catalog';
-import { barPercent, buildTools, byYear, groupByCategory, sameData, summary, usesTool, type RepoFacts, type StackData } from './stack';
+import { barPercent, buildTools, byYear, groupByCategory, pythonDeps, sameData, summary, usesTool, type RepoFacts, type StackData } from './stack';
 
 const repo = (over: Partial<RepoFacts> = {}): RepoFacts => ({ createdYear: 2025, languages: {}, deps: [], files: [], ...over });
 const tool = (id: string) => TOOLS.find((t) => t.id === id)!;
@@ -37,6 +37,55 @@ describe('usesTool: cuándo un repositorio usa una herramienta', () => {
     const tauri = repo({ deps: ['cargo:tauri'] });
     expect(usesTool(tauri, tool('tauri'))).toBe(true);
     expect(usesTool(tauri, tool('rust'))).toBe(true);
+  });
+
+  test('un repositorio de notebooks cuenta como Python aunque el código .py sea poco', () => {
+    expect(usesTool(repo({ languages: { 'Jupyter Notebook': 980, Python: 20 } }), tool('python'))).toBe(true);
+  });
+
+  test('las librerías de Python se detectan por su nombre de pip o por el del import', () => {
+    expect(usesTool(repo({ deps: ['py:scikit-learn'] }), tool('scikit-learn'))).toBe(true);
+    expect(usesTool(repo({ deps: ['py:sklearn'] }), tool('scikit-learn'))).toBe(true);
+    expect(usesTool(repo({ deps: ['py:torch'] }), tool('pytorch'))).toBe(true);
+    expect(usesTool(repo({ deps: ['py:langchain-community'] }), tool('langchain'))).toBe(true);
+    expect(usesTool(repo({ deps: ['py:pandas'] }), tool('scikit-learn'))).toBe(false);
+  });
+
+  test('las librerías de Python cuentan como Python', () => {
+    expect(usesTool(repo({ deps: ['py:pandas'] }), tool('python'))).toBe(true);
+  });
+});
+
+describe('pythonDeps: dependencias de Python', () => {
+  test('requirements.txt: nombre normalizado, sin versiones, extras, comentarios ni opciones', () => {
+    const txt = '# base\npandas>=2.0\nscikit_learn==1.5 # ML\nfastapi[standard]\n-r dev.txt\n\nPyMC-Marketing';
+    expect(pythonDeps('requirements.txt', txt)).toEqual(['py:pandas', 'py:scikit-learn', 'py:fastapi', 'py:pymc-marketing']);
+  });
+
+  test('pyproject.toml: las listas de dependencias y las de Poetry', () => {
+    const toml = '[project]\nname = "demo"\ndependencies = [\n  "langgraph>=0.2",\n  "duckdb",\n]\n[tool.poetry.dependencies]\npython = "^3.12"\nxgboost = "^2"\n';
+    expect(pythonDeps('pyproject.toml', toml)).toEqual(['py:langgraph', 'py:duckdb', 'py:xgboost']);
+  });
+
+  test('archivos .py: los módulos que se importan', () => {
+    const code = 'import pandas as pd\nfrom sklearn.model_selection import train_test_split\nimport os, json\n  from torch import nn\nx = "import falso"';
+    expect(pythonDeps('src/train.py', code)).toEqual(['py:pandas', 'py:sklearn', 'py:os', 'py:torch']);
+  });
+
+  test('notebooks: los imports de las celdas de código, no los del texto', () => {
+    const nb = JSON.stringify({
+      cells: [
+        { cell_type: 'markdown', source: ['import matplotlib\n'] },
+        { cell_type: 'code', source: ['import numpy as np\n', 'from pyspark.sql import functions as F\n'] },
+        { cell_type: 'code', source: 'import seaborn as sns' },
+      ],
+    });
+    expect(pythonDeps('analisis.ipynb', nb)).toEqual(['py:numpy', 'py:pyspark', 'py:seaborn']);
+  });
+
+  test('un notebook roto o un archivo desconocido no tumban el análisis', () => {
+    expect(pythonDeps('roto.ipynb', '{no es json')).toEqual([]);
+    expect(pythonDeps('README.md', 'import pandas')).toEqual([]);
   });
 });
 

@@ -10,7 +10,7 @@ export interface RepoFacts {
   createdYear: number;
   /** Bytes de código por lenguaje, como los da GitHub. */
   languages: Record<string, number>;
-  /** Dependencias de todos sus `package.json`, y las de Cargo como `cargo:nombre`. */
+  /** Dependencias de todos sus `package.json`, las de Cargo como `cargo:nombre` y las de Python como `py:nombre`. */
   deps: string[];
   /** Rutas de los archivos del repositorio. */
   files: string[];
@@ -30,6 +30,53 @@ export interface StackData {
   generatedAt: string;
   repos: { total: number; public: number; private: number };
   tools: StackTool[];
+}
+
+/** Nombre de un paquete de Python como lo compara pip: en minúsculas y con `_` o `.` como `-`. */
+const pyName = (name: string) => `py:${name.toLowerCase().replace(/[_.]+/g, '-')}`;
+const unique = (list: string[]) => [...new Set(list)];
+
+/** Los módulos que importa un código de Python (solo el primero de `import a, b`, que basta para detectar la librería). */
+const importsOf = (code: string) => [...code.matchAll(/^[ \t]*(?:from|import)[ \t]+([A-Za-z_]\w*)/gm)].map((m) => pyName(m[1]));
+
+function requirementsDeps(text: string): string[] {
+  return text
+    .split('\n')
+    .map((line) => line.split('#')[0].trim())
+    .filter((line) => line && !line.startsWith('-'))
+    .map((line) => line.match(/^[A-Za-z0-9][A-Za-z0-9._-]*/)?.[0])
+    .filter((name): name is string => !!name)
+    .map(pyName);
+}
+
+function pyprojectDeps(text: string): string[] {
+  const names: string[] = [];
+  for (const [, list] of text.matchAll(/dependencies\s*=\s*\[([\s\S]*?)\]/g)) {
+    for (const [, name] of list.matchAll(/["']([A-Za-z0-9][A-Za-z0-9._-]*)/g)) names.push(name);
+  }
+  const poetry = text.match(/^\[tool\.poetry\.dependencies\]\s*\n([\s\S]*?)(?=^\[|$(?![\s\S]))/m)?.[1] ?? '';
+  for (const [, name] of poetry.matchAll(/^([A-Za-z0-9][A-Za-z0-9._-]*)\s*=/gm)) if (name.toLowerCase() !== 'python') names.push(name);
+  return names.map(pyName);
+}
+
+function notebookDeps(text: string): string[] {
+  try {
+    const cells: { cell_type?: string; source?: string | string[] }[] = JSON.parse(text).cells ?? [];
+    const code = cells.filter((c) => c.cell_type === 'code').map((c) => (Array.isArray(c.source) ? c.source.join('') : (c.source ?? '')));
+    return importsOf(code.join('\n'));
+  } catch {
+    return [];
+  }
+}
+
+/** Las librerías de Python de un archivo, como `py:nombre`: requirements, pyproject.toml, código `.py` o notebooks. */
+export function pythonDeps(path: string, text: string): string[] {
+  const name = path.split('/').pop() ?? path;
+  if (/^requirements.*\.txt$/i.test(name)) return unique(requirementsDeps(text));
+  if (name === 'pyproject.toml') return unique(pyprojectDeps(text));
+  if (name.endsWith('.py')) return unique(importsOf(text));
+  if (name.endsWith('.ipynb')) return unique(notebookDeps(text));
+  return [];
 }
 
 /** Un lenguaje cuenta si supera este porcentaje del código del repositorio (si no, HTML y CSS saldrían en todos). */

@@ -13,8 +13,9 @@
   const repos = (n: number) => `${n} ${n === 1 ? 'repositorio' : 'repositorios'}`;
   const sinceYear = Math.min(...stack.tools.map((t) => t.since));
 
-  // Cada categoría tiene su color (--cat-1 a --cat-8), en el orden del catálogo.
-  const categoryIndex = new Map<string, number>(CATEGORIES.map((c, i) => [c.id, i + 1]));
+  // Cada categoría con herramientas tiene su color (--cat-1 a --cat-8), en el orden del catálogo. Se reparten solo entre las que
+  // aparecen: el catálogo tiene más categorías que colores.
+  const categoryIndex = new Map<string, number>(groups.map((g, i) => [g.id, (i % 8) + 1]));
   const color = (category: string) => `var(--cat-${categoryIndex.get(category) ?? 8})`;
   const categoryLabel = new Map<string, string>(CATEGORIES.map((c) => [c.id, c.label]));
 
