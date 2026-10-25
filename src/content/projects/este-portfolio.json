@@ -1,6 +1,6 @@
 {
   "name": "Agus OS",
-  "domain": "example.com",
+  "domain": "agus-os.aguschaud.workers.dev",
   "description": "Este portfolio: un sistema operativo de escritorio dentro del navegador.",
   "summary": "Este portfolio: un sistema operativo de escritorio dentro del navegador.",
   "details": [
@@ -23,7 +23,7 @@
     "from": "#8a6dff",
     "to": "#3d2bd1"
   },
-  "url": "https://example.com",
+  "url": "https://agus-os.aguschaud.workers.dev",
   "embeddable": false,
   "howto": true,
   "order": 6,

@@ -18,7 +18,7 @@ export const PERSONA = {
   /** Lo que responde `whoami` en la Terminal. */
   whoami: 'Un inconformista: entiendo qué está pasando y por qué, qué puede pasar y qué podemos cambiar para que pase algo distinto.',
   /** La dirección pública de la web (sin barra final). También va en wrangler.jsonc → SITE_URL. */
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://agus-os.aguschaud.workers.dev',
   /** Tu usuario de GitHub: la ventana GitHub, el Stack y los repositorios etiquetados con `showcase`. */
   github: 'agus-chaud',
   /** Nombre del PDF que se descarga desde Mi CV. */
