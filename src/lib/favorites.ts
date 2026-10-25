@@ -43,11 +43,26 @@ export interface MovieItem {
   /** El identificador del tráiler en YouTube. */
   trailer: string;
 }
+/** Los topes del resumen de un libro, en secciones, puntos por sección y caracteres. */
+export const SUMMARY_LIMITS = { sections: 10, points: 10, title: 80, label: 80, text: 500 } as const;
+
+/** Un punto del resumen: una etiqueta en negrita («Velocidad»), un texto, o las dos cosas. Puede tener subpuntos, que ya no se anidan más. */
+export interface SummaryPoint {
+  label?: string;
+  text?: string;
+  points?: Omit<SummaryPoint, 'points'>[];
+}
+export interface SummarySection {
+  title: string;
+  points: SummaryPoint[];
+}
 export interface BookItem {
   id: string;
   title: string;
   author: string;
   cover: string;
+  /** El resumen que escribió el dueño del portfolio, por secciones. Opcional: sin él, la portada no abre nada. */
+  summary?: SummarySection[];
 }
 export interface SongItem {
   id: string;

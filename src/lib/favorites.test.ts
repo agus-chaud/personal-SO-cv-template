@@ -8,6 +8,7 @@ import {
   MAX_ITEMS,
   SECTIONS,
   SHELVID_ORIGIN,
+  SUMMARY_LIMITS,
   YOUTUBE_ID,
   coverPath,
   nextTrack,
@@ -177,6 +178,44 @@ describe('src/content/favorites', () => {
     if (books.kind !== 'books') throw new Error('tipo');
     for (const b of books.items) expect(b.author.length, b.id).toBeGreaterThan(2);
     if (books.link) expect(books.link.url.startsWith('https://')).toBe(true);
+  });
+
+  test('los cuatro libros con resumen tienen sus cinco secciones; Hábitos atómicos está, sin resumen', () => {
+    const books = sections.books;
+    if (books.kind !== 'books') throw new Error('tipo');
+    const byId = Object.fromEntries(books.items.map((b) => [b.id, b]));
+    for (const id of ['ai-engineering', 'nos-vemos-en-el-barro', 'el-valor-de-la-atencion', 'esto-es-marketing']) {
+      expect(byId[id]?.summary?.length, id).toBe(5);
+    }
+    expect(byId['habitos-atomicos']).toMatchObject({ title: 'Hábitos atómicos', author: 'James Clear' });
+    expect(byId['habitos-atomicos'].summary).toBeUndefined();
+  });
+
+  test('cada sección de un resumen tiene título y puntos, cada punto dice algo y no sobran espacios', () => {
+    const books = sections.books;
+    if (books.kind !== 'books') throw new Error('tipo');
+    // Un texto limpio: sin espacios al principio ni al final, ni dobles, ni antes de un signo de puntuación.
+    const clean = (where: string, text: string, max: number) => {
+      expect(text.length, where).toBeGreaterThan(0);
+      expect(text.length, where).toBeLessThanOrEqual(max);
+      expect(text, where).toBe(text.trim());
+      expect(text, where).not.toMatch(/\s{2,}|\s[.,:;]/);
+    };
+    for (const b of books.items.filter((x) => x.summary)) {
+      expect(b.summary!.length, b.id).toBeLessThanOrEqual(SUMMARY_LIMITS.sections);
+      for (const [i, s] of b.summary!.entries()) {
+        clean(`${b.id} §${i + 1}`, s.title, SUMMARY_LIMITS.title);
+        expect(s.points.length, `${b.id} §${i + 1}`).toBeGreaterThan(0);
+        expect(s.points.length, `${b.id} §${i + 1}`).toBeLessThanOrEqual(SUMMARY_LIMITS.points);
+        const points = s.points.flatMap((p) => [p, ...(p.points ?? [])]);
+        for (const p of points) {
+          const where = `${b.id} §${i + 1}: ${p.label ?? p.text}`;
+          expect(p.label ?? p.text, where).toBeTruthy();
+          if (p.label) clean(where, p.label, SUMMARY_LIMITS.label);
+          if (p.text) clean(where, p.text, SUMMARY_LIMITS.text);
+        }
+      }
+    }
   });
 
   test('las canciones llevan artista y su vídeo de YouTube, y no se repite ninguno', () => {

@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { NETWORKS, RELATIONS, normalizeLink, LIMITS as GUESTBOOK_LIMITS } from './lib/guestbook';
-import { COVER_PATH, DURATION, ITEM_ID, MAX_ITEMS, SHELVID_ORIGIN, YOUTUBE_ID } from './lib/favorites';
+import { COVER_PATH, DURATION, ITEM_ID, MAX_ITEMS, SHELVID_ORIGIN, SUMMARY_LIMITS, YOUTUBE_ID } from './lib/favorites';
 import { isSafeProjectUrl } from './lib/project-url';
 
 const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i);
@@ -117,6 +117,22 @@ const httpsUrl = z.string().refine((u) => u.startsWith('https://') && URL.canPar
 const shelvidUrl = httpsUrl.refine((u) => u.startsWith(`${SHELVID_ORIGIN}/`), `La ficha de un juego debe estar en ${SHELVID_ORIGIN}`);
 const link = z.object({ label: z.string().min(1), url: httpsUrl });
 
+// El resumen de un libro: secciones con puntos de etiqueta y/o texto, y como mucho un nivel de subpuntos.
+const summaryLeaf = z
+  .object({ label: z.string().min(1).max(SUMMARY_LIMITS.label).optional(), text: z.string().min(1).max(SUMMARY_LIMITS.text).optional() })
+  .refine((p) => p.label || p.text, 'Un punto del resumen necesita etiqueta o texto');
+const summaryPoint = z
+  .object({
+    label: z.string().min(1).max(SUMMARY_LIMITS.label).optional(),
+    text: z.string().min(1).max(SUMMARY_LIMITS.text).optional(),
+    points: z.array(summaryLeaf).min(1).max(SUMMARY_LIMITS.points).optional(),
+  })
+  .refine((p) => p.label || p.text, 'Un punto del resumen necesita etiqueta o texto');
+const summary = z
+  .array(z.object({ title: z.string().min(1).max(SUMMARY_LIMITS.title), points: z.array(summaryPoint).min(1).max(SUMMARY_LIMITS.points) }))
+  .min(1)
+  .max(SUMMARY_LIMITS.sections);
+
 /** Un archivo por sección de Favoritos: el top 10 de Pol, con su contenido y sus portadas (S-03). */
 const favorites = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/favorites' }),
@@ -136,7 +152,7 @@ const favorites = defineCollection({
       kind: z.literal('books'),
       title: z.string().min(1),
       link: link.optional(),
-      items: z.array(z.object({ id: itemId, title: z.string().min(1), author: z.string().min(1), cover })).max(MAX_ITEMS),
+      items: z.array(z.object({ id: itemId, title: z.string().min(1), author: z.string().min(1), cover, summary: summary.optional() })).max(MAX_ITEMS),
     }),
     z.object({
       kind: z.literal('music'),

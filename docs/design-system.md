@@ -256,7 +256,9 @@ para volver. No hay textos de gusto ni notas: solo el contenido.
 - **Videojuegos, películas y libros** son una cuadrícula de portadas (`minmax(120px, 1fr)`, esquinas de 8px y un filete fino): 3 / 4 los juegos, 2 / 3
   los libros y las películas, que además llevan una ficha más ancha (póster a la izquierda; título, año, sinopsis y el botón «Ver tráiler» a la
   derecha). Los juegos son enlaces a su ficha en Shelvid (pestaña nueva), con una línea al pie que nombra Shelvid como el proyecto de un amigo.
-  Los libros llevan, si existe, un enlace final (Yoleo).
+  Los libros llevan, si existe, un enlace final (Yoleo). Un libro con resumen es un botón con «Leer resumen» en `--accent-text` bajo el autor; abre, en la
+  misma ventana y con la barra «‹ Libros», la portada (72px), el título (20px) y el autor en `--muted`, y debajo cada sección numerada (15px, seminegrita)
+  con sus viñetas (14px, interlineado 1,5; la etiqueta en negrita; marcadores en `--muted`).
 - **Música** es una lista como una biblioteca: número, portada cuadrada de 52px, título y artista, duración (si la hay), un enlace a YouTube Music y el
   botón de play (círculo con `--accent-solid`). La que suena queda marcada con `--accent-soft`.
 - Cada región con desplazamiento se puede enfocar con el teclado (`role="region"`).

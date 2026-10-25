@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
-  import { SECTIONS, type FavoritesSection, type SectionId } from '../../../lib/favorites';
+  import { tick, untrack } from 'svelte';
+  import { SECTIONS, type BookItem, type FavoritesSection, type SectionId } from '../../../lib/favorites';
   import { UI_SVG } from '../../icons';
   import { player } from '../../stores/player.svelte';
+  import BookSummary from './BookSummary.svelte';
   import CoverGrid from './CoverGrid.svelte';
   import MusicList from './MusicList.svelte';
 
@@ -19,6 +20,8 @@
   let sections = $state<FavoritesSection[] | null>(null);
   let failed = $state(false);
   let selected = $state<SectionId | null>(untrack(() => known(initial)));
+  /** El libro cuyo resumen se está leyendo, dentro de la sección de libros. */
+  let book = $state<BookItem | null>(null);
   let lastNav = untrack(() => nav);
 
   // Con la ventana ya abierta, otro doble clic en el icono navega dentro de ella.
@@ -27,8 +30,32 @@
     const target = initial;
     if (n === lastNav) return;
     lastNav = n;
-    untrack(() => (selected = known(target)));
+    untrack(() => {
+      selected = known(target);
+      book = null;
+    });
   });
+
+  // Al cerrar un resumen se vuelve a la cuadrícula y el foco regresa a la portada de ese libro.
+  async function closeBook() {
+    const id = book?.id;
+    book = null;
+    await tick();
+    document.querySelector<HTMLElement>(`[data-testid="favorites-book-${id}"]`)?.focus();
+  }
+
+  function back() {
+    if (book) closeBook();
+    else selected = null;
+  }
+
+  // Escape cierra el resumen y no la ventana.
+  function onkeydown(e: KeyboardEvent) {
+    if (e.key !== 'Escape' || !book) return;
+    e.preventDefault();
+    e.stopPropagation();
+    closeBook();
+  }
 
   // El contenido se pide al abrir la app (un archivo estático del propio sitio): la home no lo lleva.
   $effect(() => {
@@ -56,17 +83,22 @@
     <p class="status" role="status" data-testid="favorites-loading">Cargando…</p>
   {:else if section}
     <header class="bar">
-      <button class="back" data-testid="favorites-back" onclick={() => (selected = null)}>
-        <span aria-hidden="true">{@html UI_SVG.back}</span> Favoritos
+      <button class="back" data-testid="favorites-back" onclick={back}>
+        <span aria-hidden="true">{@html UI_SVG.back}</span> {book ? section.title : 'Favoritos'}
       </button>
     </header>
     <!-- La región se puede enfocar con el teclado para desplazarla con las flechas, aunque no tenga controles dentro. -->
-    <div class="scroll" class:with-player={player.current !== null} role="region" aria-label={section.title} tabindex="0">
-      <h2 data-testid="favorites-title">{section.title}</h2>
-      {#if section.kind === 'music'}
-        <MusicList {section} />
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+    <div class="scroll" class:with-player={player.current !== null} role="region" aria-label={book?.title ?? section.title} tabindex="0" {onkeydown}>
+      {#if section.kind === 'books' && book?.summary}
+        <BookSummary book={{ ...book, summary: book.summary }} />
       {:else}
-        <CoverGrid {section} />
+        <h2 data-testid="favorites-title">{section.title}</h2>
+        {#if section.kind === 'music'}
+          <MusicList {section} />
+        {:else}
+          <CoverGrid {section} onopenbook={(b) => (book = b)} />
+        {/if}
       {/if}
     </div>
   {:else}

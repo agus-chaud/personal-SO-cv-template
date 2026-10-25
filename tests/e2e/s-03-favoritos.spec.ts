@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import type { SummarySection } from '../../src/lib/favorites';
 import { animationsDone, endCurrent, enter, failCurrent, loadFavorites, stubExternalSites, stubYouTube, youtubeLoads } from './helpers';
 
 const [games, movies, books, music] = loadFavorites();
@@ -88,6 +89,38 @@ test.describe('S-03 Favoritos', () => {
     // El enlace final (por ejemplo, a tu perfil de lectura) solo sale si está en el archivo.
     if (books.link) await expect(page.getByTestId('favorites-link').getByRole('link')).toHaveAttribute('href', books.link.url);
     else await expect(page.getByTestId('favorites-link')).toHaveCount(0);
+  });
+
+  test('libros: un libro con resumen se abre en la ventana y se vuelve con «Libros» o con Escape', async ({ page }, testInfo) => {
+    const withSummary = books.items.filter((b) => b.summary);
+    const without = books.items.filter((b) => !b.summary);
+    test.skip(withSummary.length === 0, 'ningún libro tiene resumen');
+    const b = withSummary[0];
+    const summary = b.summary as SummarySection[];
+    await openSection(page, testInfo.project.name, 'books');
+    // Los libros sin resumen siguen siendo solo una portada.
+    for (const x of without) await expect(page.getByTestId(`favorites-book-${x.id}`)).toHaveCount(0);
+
+    await page.getByTestId(`favorites-book-${b.id}`).click();
+    const detail = page.getByTestId(`favorites-summary-${b.id}`);
+    await expect(page.getByTestId('favorites-summary-title')).toHaveText(b.title);
+    await expect(page.getByTestId('favorites-summary-title')).toBeFocused();
+    await expect(detail).toContainText(b.author as string);
+    await expect(detail.locator('h3')).toHaveCount(summary.length);
+    await expect(detail.locator('h3').first()).toHaveText(`1. ${summary[0].title}`);
+    const first = summary[0].points[0];
+    await expect(detail.locator('li').first()).toContainText(first.text ?? first.label!);
+    await expect(page.getByTestId('favorites-back')).toHaveText('Libros');
+
+    await page.getByTestId('favorites-back').click();
+    await expect(page.getByTestId('favorites-grid-books')).toBeVisible();
+    await expect(page.getByTestId(`favorites-book-${b.id}`)).toBeFocused();
+
+    await page.getByTestId(`favorites-book-${b.id}`).press('Enter');
+    await expect(detail).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByTestId('favorites')).toBeVisible();
+    await expect(page.getByTestId(`favorites-book-${b.id}`)).toBeFocused();
   });
 
   test('música: una lista de diez canciones con portada, título, artista, enlace a YouTube Music y play', async ({ page }, testInfo) => {

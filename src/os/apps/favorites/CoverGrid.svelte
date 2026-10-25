@@ -1,10 +1,11 @@
 <script lang="ts">
   import { UI_SVG } from '../../icons';
-  import { SECTIONS, trailerTrack, type BooksSection, type GamesSection, type MoviesSection } from '../../../lib/favorites';
+  import { SECTIONS, trailerTrack, type BookItem, type BooksSection, type GamesSection, type MoviesSection } from '../../../lib/favorites';
   import { player } from '../../stores/player.svelte';
 
   // Las secciones de portadas (S-03): videojuegos, películas y series y libros. Cada una es una cuadrícula del top 10.
-  let { section }: { section: GamesSection | MoviesSection | BooksSection } = $props();
+  // Un libro con resumen es un botón que lo abre (`onopenbook`); sin resumen, solo la portada.
+  let { section, onopenbook }: { section: GamesSection | MoviesSection | BooksSection; onopenbook?: (book: BookItem) => void } = $props();
 
   const aspect = $derived(SECTIONS.find((s) => s.id === section.kind)!.aspect);
 </script>
@@ -39,11 +40,20 @@
   {:else}
     {#each section.items as book (book.id)}
       <li data-testid={`favorites-item-${book.id}`}>
-        <div class="card">
-          <img class="cover" src={book.cover} alt="" loading="lazy" />
-          <span class="name">{book.title}</span>
-          <span class="sub">{book.author}</span>
-        </div>
+        {#if book.summary && onopenbook}
+          <button class="card book" data-testid={`favorites-book-${book.id}`} aria-label={`Leer el resumen de ${book.title}, de ${book.author}`} onclick={() => onopenbook(book)}>
+            <img class="cover" src={book.cover} alt="" loading="lazy" />
+            <span class="name">{book.title}</span>
+            <span class="sub">{book.author}</span>
+            <span class="more" aria-hidden="true">Leer resumen</span>
+          </button>
+        {:else}
+          <div class="card">
+            <img class="cover" src={book.cover} alt="" loading="lazy" />
+            <span class="name">{book.title}</span>
+            <span class="sub">{book.author}</span>
+          </div>
+        {/if}
       </li>
     {/each}
   {/if}
@@ -79,9 +89,22 @@
     color: inherit;
     text-decoration: none;
   }
-  a.card:hover .cover {
+  a.card:hover .cover,
+  button.card:hover .cover {
     filter: brightness(1.06);
   }
+  button.card {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  .more {
+    font-size: calc(13px * var(--text-scale));
+    font-weight: 600;
+    color: var(--accent-text);
+  }
+  button.card:focus-visible,
   a.card:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;

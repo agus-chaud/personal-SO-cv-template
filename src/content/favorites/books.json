@@ -6,25 +6,454 @@
       "id": "ai-engineering",
       "title": "AI Engineering",
       "author": "Chip Huyen",
-      "cover": "/favoritos/libros/ai-engineering.jpg"
+      "cover": "/favoritos/libros/ai-engineering.jpg",
+      "summary": [
+        {
+          "title": "Filosofía: Cómo usar IA para estudiar e investigar",
+          "points": [
+            {
+              "label": "El peligro de la \"falsa maestría\"",
+              "text": "Obtener respuestas rápidas y de alta calidad genera la ilusión de haber aprendido. Si la IA resuelve todo el esfuerzo cognitivo, es casi imposible aprender."
+            },
+            {
+              "label": "Procesamiento profundo vs. resumen superficial",
+              "text": "En vez de pedirle a la IA que \"resuma un artículo\", tratá de leer las fuentes originales y usar la IA para profundizar conceptos específicos (ej. \"Explicame más simple esta definición del autor y cómo se vincula con X\")."
+            },
+            {
+              "label": "El valor del esfuerzo mental",
+              "text": "Todo trabajo cognitivo es lo que fija el conocimiento; no dejes que la IA te robe el proceso de aprendizaje."
+            }
+          ]
+        },
+        {
+          "title": "Fundamentos de AI Engineering y Aplicaciones",
+          "points": [
+            {
+              "label": "Enfoque en casos de uso",
+              "text": "El cuello de botella actual no es crear nuevos modelos de ML, sino aplicar los modelos existentes en productos software (chatbots, agentes, arquitecturas RAG) que valgan la pena. No todo necesita un chatbot."
+            },
+            {
+              "label": "Alucinaciones",
+              "text": "Las alucinaciones no son fallas de código, es la naturaleza de los modelos probabilísticos. El trabajo humano es andar midiendo y evaluando. La IA no sabe lo que no sabe."
+            }
+          ]
+        },
+        {
+          "title": "Evaluación, Métricas y Optimización",
+          "points": [
+            {
+              "label": "Evaluación en dos pasos",
+              "points": [
+                {
+                  "label": "Pruebas unitarias",
+                  "text": "Evaluar componentes y funciones individuales del sistema, no solo la respuesta final."
+                },
+                {
+                  "label": "Rúbrica de evaluación",
+                  "text": "Definir criterios (relevancia, veracidad factual, seguridad) puntuados mediante código tradicional o LLM-as-a-judge."
+                }
+              ]
+            },
+            {
+              "label": "Métricas de Recuperación (Retrieval)",
+              "points": [
+                {
+                  "label": "Precision",
+                  "text": "Porcentaje de documentos recuperados que realmente son relevantes."
+                },
+                {
+                  "label": "Recall",
+                  "text": "Porcentaje de todos los documentos relevantes existentes que el sistema logró recuperar."
+                },
+                {
+                  "label": "Compromiso entre FP y FN",
+                  "text": "En contextos críticos (ej. medicina), un Falso Positivo es preferible a un Falso Negativo."
+                }
+              ]
+            },
+            {
+              "label": "Técnicas de ajuste",
+              "text": "Prompt Engineering para refinar consultas, Fine-Tuning para adaptar al modelo a estilos específicos (código o documentación) y Prompt Caching para reducir costos en peticiones repetitivas."
+            }
+          ]
+        },
+        {
+          "title": "RAG y Búsqueda de Información",
+          "points": [
+            {
+              "label": "Embeddings",
+              "text": "Vectores que capturan el significado semántico del dato original. Permiten calcular distancias numéricas entre conceptos (mediante algoritmos como KNN)."
+            },
+            {
+              "label": "RAG",
+              "text": "La precisión de las respuestas generadas depende directamente de la calidad de las consultas contra la base de datos de contexto."
+            }
+          ]
+        },
+        {
+          "title": "Las 5 Etapas de Evolución en una Arquitectura de IA",
+          "points": [
+            {
+              "label": "Llamadas directas a API",
+              "text": "Enfoque inicial no optimizado (costos elevados por falta de caché, exposición a prompt injection, sin RAG)."
+            },
+            {
+              "label": "Guardrails y Seguridad",
+              "text": "Filtrado de insumos sensibles (PII, contraseñas) a la entrada y validación de toxicidad/formatos a la salida."
+            },
+            {
+              "label": "Router de Modelos (Model Gateway)",
+              "text": "Capa lógica que selecciona el modelo óptimo según la complejidad de la tarea, costo, latencia o permisos de usuario."
+            },
+            {
+              "label": "Capa de Caché e Integración de RAG",
+              "text": "Caché en construcción de contexto y reutilización de respuestas para prompts similares mediante distancia de embeddings."
+            },
+            {
+              "label": "Capacidades Agénticas",
+              "text": "Evolución de un sistema pasivo a uno activo, donde el agente ejecuta acciones en vez de solo indicarle al usuario qué hacer."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "nos-vemos-en-el-barro",
       "title": "Nos vemos en el barro",
       "author": "Alex Dantart",
-      "cover": "/favoritos/libros/nos-vemos-en-el-barro.jpg"
+      "cover": "/favoritos/libros/nos-vemos-en-el-barro.jpg",
+      "summary": [
+        {
+          "title": "Mentalidad, Filosofía y Liderazgo",
+          "points": [
+            {
+              "label": "Autonomía y responsabilidad",
+              "text": "Tomar decisiones sin pedir permiso implica no delegar tu criterio y asumir el riesgo de las consecuencias (ganar o aprender)."
+            },
+            {
+              "label": "Entender vs. juzgar",
+              "text": "Decir que alguien es \"inteligente\" es una excusa para no entender su proceso. La verdadera ventaja competitiva está en desarmar los problemas por dentro para comprender su funcionamiento."
+            },
+            {
+              "label": "Coherencia en los días difíciles",
+              "text": "El carácter se demuestra cuando no hay aplausos. En los momentos de incertidumbre, la coherencia y la honestidad son las que sostienen al proyecto."
+            },
+            {
+              "label": "Rendir cuentas al proceso, no al público",
+              "text": "Buscar validación externa o priorizar \"parecer inteligente\" te convierte en un esclavo de la audiencia."
+            }
+          ]
+        },
+        {
+          "title": "Validación, Cliente y Mercado Mínimo",
+          "points": [
+            {
+              "label": "Comprensión profunda del dolor",
+              "text": "Tu ventaja competitiva no es la tecnología, sino tu capacidad de describir el caos y el problema del cliente mejor de lo que él mismo puede expresarlo."
+            },
+            {
+              "label": "Ir al mercado temprano",
+              "text": "La vergüenza de lanzar un producto feo dura días; la de no lanzar por miedo, dura años. Si el Producto Mínimo Viable (MVP) no te obliga a hablar directamente con personas, es \"teatro\"."
+            },
+            {
+              "label": "Velocidad",
+              "text": "Diferencia entre decisiones reversibles (decidí rápido, prueba y corrige) e irreversibles (frená y analiza). Esperar al 100% de la información para actuar suele significar llegar tarde."
+            },
+            {
+              "label": "Validación real",
+              "points": [
+                {
+                  "text": "La familia y amigos dan cariño, no validan tu proyecto. Tu público no es tu familia."
+                },
+                {
+                  "text": "\"Me interesa\" no es una venta; se requiere un intercambio que genere fricción (tiempo, datos clave, reservas) o una transacción económica."
+                },
+                {
+                  "text": "Cobrar es la respuesta más honesta del mercado."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ejecución, Producto y Experiencia (\"Magia Invisible\")",
+          "points": [
+            {
+              "label": "Enamorarse del problema, no de la solución",
+              "text": "Hacer un MVP automatizado desde el inicio te roba flexibilidad y te atrapa en una ilusión de control. Al principio hacé el trabajo manualmente."
+            },
+            {
+              "label": "Criterio de automatización",
+              "text": "Automatiza para reducir el trabajo mental del cliente, nunca para sacarte problemas de encima y traspasárselos en forma de tickets o burocracia."
+            },
+            {
+              "label": "Lo \"Premium\" como estándar de decisiones",
+              "text": "Ser Premium no es una cuestión de precio o estética, sino de elegir a quién no atendés, qué características no agregas y mantener la integridad antes que comprometer la experiencia por facturar a corto plazo."
+            }
+          ]
+        },
+        {
+          "title": "Inversores, Financiación y Reputación",
+          "points": [
+            {
+              "label": "El dinero acelera, no arregla",
+              "text": "Si el negocio no funciona internamente, el capital solo magnifica los errores ante una audiencia más grande."
+            },
+            {
+              "label": "Relaciones estratégicas, no de desesperación",
+              "text": "Un inversor es un socio a largo plazo. Levantar capital por desesperación erosiona la negociación; busca alianzas basadas en consistencia y tracción real."
+            },
+            {
+              "label": "El valor de la reputación",
+              "text": "La reputación es la confianza acumulada que te otorga velocidad y acceso. Se construye siendo predecible, honesto y cuidando con qué personas te comprometes."
+            },
+            {
+              "label": "Pacto de socios y cultura",
+              "text": "La cultura la define el comportamiento del fundador en momentos de presión. Los pactos de socios no son un signo de desconfianza, sino de madurez para prevenir conflictos futuros."
+            }
+          ]
+        },
+        {
+          "title": "Inteligencia Artificial y Futuro",
+          "points": [
+            {
+              "label": "La tecnología no es barrera de entrada",
+              "text": "Las llamadas a API o las funcionalidades aisladas se copian o son absorbidas por las plataformas base. La ventaja sostenible se construye mediante la distribución, la confianza, los datos propios y la integración en el flujo del cliente."
+            },
+            {
+              "label": "Sostenibilidad económica",
+              "text": "Un modelo de negocio que aumenta su costo por interacción sin escalar el valor entregado colapsará al crecer."
+            },
+            {
+              "label": "Lo escaso en la era de la abundancia",
+              "text": "Producir contenido o código es barato; lo valioso es el pensamiento independiente, la capacidad de priorizar y hacerse cargo en los momentos de incertidumbre."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "el-valor-de-la-atencion",
       "title": "El valor de la atención",
       "author": "Johann Hari",
-      "cover": "/favoritos/libros/el-valor-de-la-atencion.jpg"
+      "cover": "/favoritos/libros/el-valor-de-la-atencion.jpg",
+      "summary": [
+        {
+          "title": "La ilusión de la velocidad y estar siempre ocupados",
+          "points": [
+            {
+              "label": "Nos apuramos para todo",
+              "text": "Comemos rápido, manejamos a los pedos y ni nos frenamos en nuestras interacciones sociales. Todo eso nos cansa más."
+            },
+            {
+              "label": "Estrés",
+              "text": "El mecanismo evolutivo del estrés (diseñado para amenazas puntuales de supervivencia) permanece activado constantemente."
+            }
+          ]
+        },
+        {
+          "title": "La crisis de atención: Nos pasa a todos",
+          "points": [
+            {
+              "label": "Atención fragmentada",
+              "text": "Mantener el foco en tareas intelectualmente complejas o conversaciones largas es un desafío creciente."
+            },
+            {
+              "label": "Responsabilidad individual vs. diseño sistémico",
+              "text": "No es tu culpa individual. Detrás de las distracciones hay miles de ingenieros y modelos de negocio millonarios que se financian con tu tiempo en pantalla y las publicidades que ves. La indignación, el odio y lo negativo generan mayor tiempo de permanencia."
+            },
+            {
+              "label": "Modelos de negocio e incentivos",
+              "points": [
+                {
+                  "text": "Mantener los servidores de Instagram no es gratis, ¿por qué no cobran suscripción para usarlo?"
+                },
+                {
+                  "text": "Su algoritmo explota perfiles psicológicos y vulnerabilidades individuales para captar su atención."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Consecuencias en la cognición y la cultura",
+          "points": [
+            {
+              "label": "El impacto del multitasking",
+              "text": "La multitarea constante degrada el rendimiento cognitivo a niveles comparables al estado de ebriedad o falta de sueño, interrumpiendo la creatividad y la memoria."
+            },
+            {
+              "label": "Pérdida de la lectura profunda",
+              "text": "La lectura en pantallas promueve un escaneo rápido, que deteriora la paciencia necesaria para leer textos largos."
+            },
+            {
+              "label": "Aceleración de los ciclos culturales",
+              "text": "Los temas de conversación, noticias y tendencias alcanzan picos de popularidad y desaparecen cada vez más rápido, sacrificando la profundidad por más volumen de información."
+            },
+            {
+              "label": "Costo de reconexión",
+              "text": "Cada interrupción requiere en promedio más de 20 minutos para recuperar el nivel previo de concentración."
+            }
+          ]
+        },
+        {
+          "title": "Las 4 capas de la atención afectadas",
+          "points": [
+            {
+              "label": "Foco inmediato",
+              "text": "La capacidad de ejecutar una tarea puntual sin interrupciones."
+            },
+            {
+              "label": "Metas a medio/largo plazo",
+              "text": "La capacidad de sostener proyectos sostenidos en el tiempo."
+            },
+            {
+              "label": "Claridad sobre los propios objetivos",
+              "text": "El espacio mental necesario para reflexionar sobre quiénes somos y qué queremos (requiere divagación y calma)."
+            },
+            {
+              "label": "Atención colectiva",
+              "text": "La capacidad social de organizarse y sostener debates sobre problemas complejos a largo plazo (ej. cambio climático)."
+            }
+          ]
+        },
+        {
+          "title": "Pilares para la recuperación del foco",
+          "points": [
+            {
+              "label": "Entrar en estado de Flow",
+              "text": "Se logra mediante objetivos claros, monotarea y desafíos alineados con el límite de nuestras capacidades actuales."
+            },
+            {
+              "label": "El valor del aburrimiento y la divagación",
+              "text": "Permitir que la mente divague es indispensable para que el cerebro asimile información, conecte ideas distantes y reorganice metas."
+            },
+            {
+              "label": "Bases biológicas de la concentración",
+              "points": [
+                {
+                  "label": "Sueño",
+                  "text": "Indispensable para la limpieza de toxinas cerebrales."
+                },
+                {
+                  "label": "Seguridad y entorno",
+                  "text": "La atención exige un entorno donde la persona no se sienta amenazada o bajo estrés financiero/emocional crónico."
+                },
+                {
+                  "label": "Nutrición y movimiento",
+                  "text": "Evitar picos de azúcar, priorizar alimentos no procesados y realizar actividad física."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "esto-es-marketing",
       "title": "Esto es marketing",
       "author": "Seth Godin",
-      "cover": "/favoritos/libros/esto-es-marketing.jpg"
+      "cover": "/favoritos/libros/esto-es-marketing.jpg",
+      "summary": [
+        {
+          "title": "Propósito del marketing",
+          "points": [
+            {
+              "label": "Enfocarse en el cliente",
+              "text": "El marketing no existe para resolver los problemas de tu empresa, sino los de tus clientes."
+            },
+            {
+              "label": "Hacer que las cosas cambien",
+              "text": "Consiste en transformar la cultura y el mundo a través de mejores servicios e historias honestas que conmuevan, no de publicidad barata."
+            },
+            {
+              "label": "Propósito",
+              "text": "Los resultados sostenibles exigen bases sólidas: los sueños que buscas alcanzar y las comunidades a las que deseas ayudar."
+            }
+          ]
+        },
+        {
+          "title": "El cambio, la inercia y el público",
+          "points": [
+            {
+              "label": "La fuerza de la inercia",
+              "text": "Las mejores ideas tardan en adoptarse porque exigen un cambio profundo y la gente suele preferir que otro tome el riesgo primero."
+            },
+            {
+              "label": "La promesa y el cambio",
+              "text": "Todo marketing efectivo hace una promesa (\"Si haces X, obtendrás Y\"), orientada al cambio que buscas generar en un grupo con creencias o espacios comunes."
+            },
+            {
+              "label": "Decir \"No es para vos\"",
+              "text": "Debes aceptar que no todo el mundo es tu público. El impacto real nace de enfocarte en quienes están curiosos, insatisfechos o aburridos."
+            }
+          ]
+        },
+        {
+          "title": "Emociones, historias y estatus",
+          "points": [
+            {
+              "label": "Medios vs. fines",
+              "text": "La gente no compra productos, compra emociones (pertenencia, paz mental, estatus, orden). Nadie quiere una agujereadora, quieren el estante colgado y la sensación de orden que transmite."
+            },
+            {
+              "label": "Nuevas soluciones, emociones primarias",
+              "text": "Cambiamos a las personas de un estado emocional a otro apelando a deseos antiguos (seguridad, control, respeto)."
+            },
+            {
+              "label": "El motor de la cultura",
+              "text": "La narrativa interna de las personas está impulsada por el estatus y el sentido de pertenencia (\"La gente como nosotros hace cosas como esta\")."
+            },
+            {
+              "label": "Buscar consejo, no solo feedback",
+              "text": "En lugar de pedir opiniones a ciegas, pregunta: \"Hice esto pensando en tus necesidades, ¿cómo puedo adaptarlo mejor?\""
+            }
+          ]
+        },
+        {
+          "title": "Estrategia y posicionamiento",
+          "points": [
+            {
+              "label": "Mercado Mínimo Viable (MMV)",
+              "text": "Enfócate en el grupo más pequeño posible que pueda sostener tu proyecto. Dominar una cultura pequeña es la forma más efectiva de iniciar un cambio real."
+            },
+            {
+              "label": "Matriz de posicionamiento",
+              "text": "Elige dos ejes de atributos reales (ej. rapidez, seguridad, escalabilidad, costo) donde la competencia esté ausente y posiciona tu propuesta allí."
+            },
+            {
+              "label": "Aceptar la narrativa del cliente",
+              "text": "Si no te compran, entiende sus razones desde su perspectiva de estatus e inercia para aprender a transformar esa narrativa."
+            }
+          ]
+        },
+        {
+          "title": "Los 5 pasos del proceso",
+          "points": [
+            {
+              "text": "Inventar algo que realmente valga la pena y aporte valor."
+            },
+            {
+              "text": "Diseñarlo y construirlo para que sea útil a otros."
+            },
+            {
+              "text": "Contar una historia alineada con los sueños del mercado mínimo viable."
+            },
+            {
+              "text": "Hacer correr la voz."
+            },
+            {
+              "text": "Ser consistente durante años para liderar el cambio y construir una comunidad sólida."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "habitos-atomicos",
+      "title": "Hábitos atómicos",
+      "author": "James Clear",
+      "cover": "/favoritos/libros/habitos-atomicos.jpg"
     }
   ]
 }

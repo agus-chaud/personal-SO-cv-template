@@ -12,7 +12,8 @@ ventana con el **top 10** de Pol en esa categoría. No hay notas, justificacione
 - **Juegos:** una cuadrícula de portadas; cada portada enlaza con la ficha del juego en **Shelvid** (shelvid.com, el proyecto de un amigo de
   Pol, que se menciona).
 - **Películas y series:** una cuadrícula de pósteres con título, año y una sinopsis breve; cada una con su **tráiler** de YouTube, que se abre en el mini reproductor.
-- **Libros:** una cuadrícula de portadas y, al final, un enlace al perfil de Pol en **Yoleo**.
+- **Libros:** una cuadrícula de portadas y, al final, un enlace al perfil de Pol en **Yoleo**. Un libro puede llevar un **resumen** (añadido el 2026-10-25): su portada
+  abre, dentro de la misma ventana, una vista con la portada, el título, el autor y el resumen por secciones; «‹ Libros» o Escape vuelven a la cuadrícula.
 - **Música:** una **lista** de canciones con su portada, el título, el artista y un botón de play; al pulsarlo, se abre el **mini reproductor**.
 
 **El mini reproductor** es una ventana pequeña, fija abajo a la derecha del escritorio (y a pie de pantalla en el móvil), que muestra **solo el vídeo** de YouTube de la canción o del
@@ -63,6 +64,12 @@ Qué comprobará cada test, según el criterio del PRD:
   próxima app cargada bajo demanda ya no cabe sin arreglar MEJORA-08 de verdad.
 - Tres pruebas de la política de seguridad se actualizaron porque la nueva política nombra a YouTube: los marcos permitidos de M-11 (ahora incluyen el vídeo sin cookies) y,
   en la nueva, que la home no lleve nada de YouTube *fuera de la propia política* y que Chrome informa de un marco bloqueado como `frame-src` (no `frame-src-elem`).
+- **Resúmenes de libros (2026-10-25):** campo `summary` opcional y estructurado (secciones → puntos con etiqueta y/o texto → un nivel de subpuntos), no Markdown,
+  para validarlo con Zod y pintarlo sin `{@html}`. Los resúmenes son largos (2.600–3.800 caracteres), por eso no van como la sinopsis de las películas sino en una vista propia
+  (`BookSummary.svelte`). Lo comprueban `src/lib/favorites.test.ts` (cinco secciones por libro con resumen, textos sin espacios sobrantes y dentro de `SUMMARY_LIMITS`) y un caso
+  nuevo de `tests/e2e/s-03-favoritos.spec.ts` (abrir, volver con «Libros» y con Escape, foco).
+- **La spec e2e de Favoritos no arranca desde que se quitó la sección de videojuegos:** `loadFavorites()` lee `games.json`, que ya no existe. El caso de los resúmenes
+  se comprobó a mano en el navegador (escritorio y móvil, claro y oscuro) y queda pendiente de correr cuando se arregle el helper.
 - Las portadas se nombran con el título sin apóstrofes (`ill-tell-you-someday.jpg`), para que coincidan con los nombres que se le dieron a Pol.
 - **No se ha podido ver reproducir un vídeo real:** el navegador de revisión crea el reproductor con el dominio sin cookies pero no llega a YouTube y deja el hueco en negro.
 
